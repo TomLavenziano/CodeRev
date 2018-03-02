@@ -21,11 +21,8 @@ CodeRev is an online platform that allows the contributors of open source softwa
     npm start
     ```
 
-4. Navigate to the following address in a browser:
-    ```
-    http://localhost:3030
+4. Navigate to 'http://localhost:3030' in a browser
 
-    ```
 
 ## Testing
 
