@@ -1,6 +1,9 @@
+# CodeRev API Service (GraphQL + ExpressJS/FeathersJS)
 FROM node:9-alpine
 
-WORKDIR /usr/src/app
+MAINTAINER Tom Lavenziano <tomlavenziano@epochzero.com>
+
+WORKDIR /var/app
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
