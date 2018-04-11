@@ -1,28 +1,33 @@
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var compression = require('compression');
-var methodOverride = require('method-override');
-var session = require('express-session');
-var flash = require('express-flash');
-var bodyParser = require('body-parser');
-var expressValidator = require('express-validator');
-var dotenv = require('dotenv');
-var passport = require('passport');
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const cors = require('cors');
+const compression = require('compression');
+const methodOverride = require('method-override');
+const session = require('express-session');
+const flash = require('express-flash');
+const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
+const dotenv = require('dotenv');
+const passport = require('passport');
 
 // Load environment variables from .env file
-dotenv.load();
+dotenv.config();
 
 // Controllers
-var HomeController = require('./controllers/home');
-var userController = require('./controllers/user');
-var contactController = require('./controllers/contact');
+const HomeController = require('./controllers/home');
+const userController = require('./controllers/user');
+const contactController = require('./controllers/contact');
 
 // Passport OAuth strategies
 require('./config/passport');
 
-var app = express();
+const app = express();
 
+app.use(cors());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.set('port', process.env.PORT || 3000);
@@ -37,8 +42,8 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(function(req, res, next) {
-  res.locals.user = req.user ? req.user.toJSON() : null;
-  next();
+    res.locals.user = req.user ? req.user.toJSON() : null;
+    next();
 });
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -58,23 +63,43 @@ app.get('/reset/:token', userController.resetGet);
 app.post('/reset/:token', userController.resetPost);
 app.get('/logout', userController.logout);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
-app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'user_location'] }));
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'user_location']}));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }));
 app.get('/auth/google', passport.authenticate('google', { scope: 'profile email' }));
 app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/', failureRedirect: '/login' }));
 app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/', failureRedirect: '/login' }));
 
-// Production error handler
-if (app.get('env') === 'production') {
-  app.use(function(err, req, res, next) {
-    console.error(err.stack);
-    res.sendStatus(err.status || 500);
-  });
-}
+(() => {
+    const envStatus = app.get('env').charAt(0).toUpperCase() + app.get('env').slice(1);
+    const HTTPS_OPTIONS = {
+        key: fs.readFileSync('ssl/key.pem'),
+        cert: fs.readFileSync('ssl/cert.pem')
+    };
 
-app.listen(app.get('port'), function() {
-  console.log('Express server listening on port ' + app.get('port'));
-});
+    // Production error handler
+    if (app.get('env') === 'production') {
+        app.use((err, req, res, next) => {
+            console.error(err.stack);
+            res.sendStatus(err.status || 500);
+        });
+    }
+
+
+    process.stdout.write('\x1bc'); // Clear console
+    console.log('\x1b[48;5;4m\x1b[30m%s\x1b[0m\x1b[38;5;4m%s\x1b[0m\x1b[38;5;4m\x1b[5m%s\x1b[0m',
+        ' DONE ',
+        ' CodeRev API | ',
+        envStatus); // Uses ANSI color codes
+    console.log('  API running at:');
+    http.createServer(app).listen(process.env.PORT, () => {
+        console.log('  - Standard:\thttp://localhost:\x1b[38;5;4m%s\x1b[0m', process.env.PORT);
+    });
+
+    https.createServer(HTTPS_OPTIONS, app).listen(process.env.HTTPS_PORT, () => {
+        console.log('  - Secure:\thttps://localhost:\x1b[38;5;4m%s\x1b[0m', process.env.HTTPS_PORT);
+    });
+    console.log('\n');
+})();
 
 module.exports = app;
