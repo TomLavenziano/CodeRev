@@ -97,7 +97,7 @@ app.get('/auth/twitter/callback', passport.authenticate('twitter', { successRedi
     });
 
     https.createServer(HTTPS_OPTIONS, app).listen(process.env.HTTPS_PORT, () => {
-        console.log('  - Secure:\thttps://localhost:\x1b[38;5;4m%s\x1b[0m', process.env.HTTPS_PORT);
+        console.log('  - Secure:\thttps://lvh.me:\x1b[38;5;4m%s\x1b[0m', process.env.HTTPS_PORT);
     });
     console.log('\n');
 })();
