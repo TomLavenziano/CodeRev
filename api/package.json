@@ -1,7 +1,7 @@
 {
-    "name": "misty-morning",
+    "name": "coderev",
     "version": "1.0.0",
-    "description": "My app description",
+    "description": "Team-driven Code Review for OSS projects",
     "scripts": {
         "start": "node server.js"
     },
