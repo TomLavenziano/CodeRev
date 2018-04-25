@@ -5,7 +5,7 @@ import router from './router';
 import store from './store';
 import './registerServiceWorker';
 import 'vuetify/dist/vuetify.min.css';
-import UserDash from './components/UserDash.vue';
+import UserDash from './views/UserDash.vue';
 import NavPanel from './components/NavigationPanel.vue';
 import Notifications from './components/Notifications.vue';
 
