@@ -12,8 +12,10 @@ module.exports = {
         sourceType: 'module'
     },
     // "extends": "eslint:recommended",
-    extends: 'plugin:vue/essential',
-    // extends: ['plugin:vue/essential', 'plugin:vue/recommended'],
+    extends: [
+        'plugin:vue/essential',
+        'plugin:vue/recommended'
+    ],
     rules: {
         indent: ['error', 4],
         'linebreak-style': ['error', 'unix'],
