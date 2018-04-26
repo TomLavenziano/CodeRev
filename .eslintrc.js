@@ -1,4 +1,5 @@
 module.exports = {
+    root: true,
     env: {
         browser: true,
         commonjs: true,
@@ -6,11 +7,15 @@ module.exports = {
         node: true,
         mocha: true
     },
-    // "extends": "eslint:recommended",
-    // extends: 'plugin:vue/essential',
+    // parser: 'vue-eslint-parser',
     parserOptions: {
         sourceType: 'module'
     },
+    // "extends": "eslint:recommended",
+    extends: [
+        'plugin:vue/essential',
+        // 'plugin:vue/recommended'
+    ],
     rules: {
         indent: ['error', 4],
         'linebreak-style': ['error', 'unix'],
@@ -140,7 +145,7 @@ module.exports = {
                 argsIgnorePattern: '^_$'
             }
         ],
-        // 'no-use-before-define': ['error', 'nofunc'],
+        'no-use-before-define': ['error', 'nofunc'],
         // Disabled because of https://github.com/eslint/eslint/issues/3420
         // 'callback-return': ['warn', ['cb', 'callback', 'next', 'done']],
         'handle-callback-err': 'warn',
@@ -207,7 +212,7 @@ module.exports = {
         'max-params': [
             'warn',
             {
-                max: 5
+                max: 4
             }
         ],
         'max-statements-per-line': 'error',
@@ -218,16 +223,16 @@ module.exports = {
                 capIsNew: false
             }
         ],
-        // 'max-len': [
-        //     'error',
-        //     {
-        //         code: 100,
-        //         ignoreTemplateLiterals: true,
-        //         ignoreRegExpLiterals: true,
-        //         ignoreUrls: true,
-        //         ignoreTrailingComments: true
-        //     }
-        // ],
+        'max-len': [
+            'error',
+            {
+                code: 100,
+                ignoreTemplateLiterals: true,
+                ignoreRegExpLiterals: true,
+                ignoreUrls: true,
+                ignoreTrailingComments: true
+            }
+        ],
         'new-parens': 'error',
         'no-array-constructor': 'error',
         'no-lonely-if': 'error',
@@ -237,7 +242,7 @@ module.exports = {
         'no-multiple-empty-lines': [
             'error',
             {
-                max: 2
+                max: 1
             }
         ],
         'no-negated-condition': 'error',
@@ -277,7 +282,7 @@ module.exports = {
         'space-before-function-paren': [
             'error',
             {
-                anonymous: 'never',
+                anonymous: 'always',
                 named: 'never',
                 asyncArrow: 'always'
             }
