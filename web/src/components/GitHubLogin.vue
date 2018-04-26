@@ -1,10 +1,10 @@
 <template>
 <div class="GitHubLogin">
-    <router-link to="https://lvh.me:4430/auth/github">
+    <a href="https://lvh.me:4430/auth/github">
         <button class="github-login-button blue">
             <i class="fab fa-github"></i> Sign in with GitHub
         </button>
-    </router-link>
+    </a>
 </div>
 </template>
 

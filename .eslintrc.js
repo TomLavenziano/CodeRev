@@ -223,16 +223,7 @@ module.exports = {
                 capIsNew: false
             }
         ],
-        'max-len': [
-            'error',
-            {
-                code: 100,
-                ignoreTemplateLiterals: true,
-                ignoreRegExpLiterals: true,
-                ignoreUrls: true,
-                ignoreTrailingComments: true
-            }
-        ],
+        'max-len': 0,
         'new-parens': 'error',
         'no-array-constructor': 'error',
         'no-lonely-if': 'error',

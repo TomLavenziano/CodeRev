@@ -4,7 +4,7 @@
         <section>
             <v-parallax :src="parallaxBackground" class="parallax-bg">
                 <v-layout column align-center justify-center class="white--text">
-                    <img class="img-logo" :src="codeRevLogo" alt="CodeRev" height="450">
+                    <img class="img-logo" :src="codeRevLogo" alt="CodeRev">
                     <h1 class="logo-text mb-2 display-4 text-xs-center">CodeRev</h1>
                     <div class="display-1 mb-3 text-xs-center logo-text">A Code Review Platform For Open Source Projects</div>
 

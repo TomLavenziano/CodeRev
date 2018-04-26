@@ -36,11 +36,30 @@
 </style>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'App',
     components: {},
     data: () => ({
-        title: 'CodeRev | Open Source Code Review'
-    })
+        title: 'CodeRev | Open Source Code Review',
+        githubId: this.$route.query.g_id
+    }),
+    created() {
+        this.$session.start();
+        this.$session.set('github_username', this.$route.query.g_id);
+        const url = `https://api.github.com/users/${this.$session.get('github_username')}`;
+        console.log(url);
+        axios.get(url).then(res => console.log(res));
+    },
+    // TODO: Store the github query param from above in a vuex store so that
+    // it's available throughout the lifespan of the app. Consider running a post load
+    // script that checks if an ID has been returned and if it has then query github and
+    // store the entire user in vuex
+    methods: {
+        getAvatar() {
+            axios.get(`https://github/com/users/${this.$session.get('github_id')}`)
+                .then(console.log);
+        }
+    }
 };
 </script>

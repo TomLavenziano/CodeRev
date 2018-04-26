@@ -68,7 +68,12 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRe
 app.get('/auth/google', passport.authenticate('google', { scope: 'profile email' }));
 app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/', failureRedirect: '/login' }));
 app.get('/auth/github', passport.authenticate('github'));
-app.get('/auth/github/callback', passport.authenticate('github', { successRedirect: '/', failureRedirect: '/login' }));
+// app.get('/auth/github/callback', passport.authenticate('github', { successRedirect: 'http://localhost:8080', failureRedirect: '/login' }));
+app.get('/auth/github/callback', passport.authenticate('github'), (req, res) => {
+    console.log('\n\n');
+    console.log(req.user.attributes.github_username);
+    res.redirect(`http://localhost:8080?g_id=${req.user.attributes.github_username}`);
+});
 
 (() => {
     const envStatus = app.get('env').charAt(0).toUpperCase() + app.get('env').slice(1);
