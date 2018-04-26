@@ -1,0 +1,45 @@
+@import './imports.less';
+
+html, body {
+  height: 100%;
+}
+
+#app {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.title-bar {
+    font-size: 2em;
+    color: @text-dark;
+}
+
+.top-navigation {
+    position: relative;
+    left: 30%;
+    a {
+        font-size: 3vh;
+        font-weight: bold;
+        padding: 0.35em;
+        margin: 5px;
+        color: #2c3e50;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        &.router-link-exact-active {
+            color: #2290f5;
+        }
+        &:hover {
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        }
+    }
+}
+
+.content-container {
+    flex: 1;
+}
+
+.centered {
+    text-align: center;
+}
