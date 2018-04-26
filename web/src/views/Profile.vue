@@ -103,7 +103,7 @@ export default {
         }
     },
         mounted() {
-            console.log("hii")
+            // console.log("hii")
             this.getUsers()
         }
 }
