@@ -8,9 +8,7 @@
                     <h1 class="logo-text mb-2 display-4 text-xs-center">CodeRev</h1>
                     <div class="display-1 mb-3 text-xs-center logo-text">A Code Review Platform For Open Source Projects</div>
 
-                    <v-btn class="blue mt-5" dark large href="/pre-made-themes">
-                        Get Started
-                    </v-btn>
+                    <GitHubLogin/>
 
                 </v-layout>
             </v-parallax>
@@ -76,9 +74,7 @@
                 <v-layout column align-center justify-center>
                     <div class="display-2 logo-text mb-3 text-xs-center ">Code Review has never been easier</div>
                     <em>Improve your workflow today</em>
-                    <v-btn class="blue lighten-2 mt-5 " dark large href="/pre-made-themes ">
-                        Get Started
-                    </v-btn>
+                    <GitHubLogin/>
                 </v-layout>
             </v-parallax>
         </section>
@@ -90,13 +86,14 @@
 @import '../assets/styles/landing.less';
 </style>
 
-<script async defer src="https://buttons.github.io/buttons.js">
-</script>
-
 <script>
+import GitHubLogin from '@/components/GitHubLogin.vue';
+
 export default {
     name: 'Landing',
-    components: {},
+    components: {
+        GitHubLogin
+    },
     data: () => ({
         parallaxBackground: require('@/assets/img/landing-hero.jpg'),
         parallaxMiddleBackground: require('@/assets/img/landing-hero--middle.jpg'),

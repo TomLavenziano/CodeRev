@@ -35,15 +35,12 @@
 @import 'assets/styles/app.less';
 </style>
 
-<script async defer src="https://buttons.github.io/buttons.js">
-</script>
-
 <script>
 export default {
     name: 'App',
     components: {},
     data: () => ({
-        title: 'CodeRev | Open Source Code Review',
+        title: 'CodeRev | Open Source Code Review'
     })
 };
 </script>
