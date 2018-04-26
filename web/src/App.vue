@@ -1,30 +1,49 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/profile">Profile</router-link>
-    </div>
-    <router-view/>
-  </div>
+<div id="app">
+    <v-app light>
+        <v-toolbar class="white">
+            <v-toolbar-title v-text="title" class="title-bar" />
+            <div class="top-navigation">
+                <router-link to="/">Home</router-link>
+                <router-link to="/dashboard">Dashboard</router-link>
+                <router-link to="/profile">Profile</router-link>
+                <router-link to="/projectlist">Project List</router-link>
+            </div>
+        </v-toolbar>
+        <div class="content-container">
+            <transition name="fade">
+                <router-view></router-view>
+            </transition>
+        </div>
+
+        <v-footer class="blue darken-2 fixed">
+            <v-layout row wrap align-center>
+                <v-flex xs12>
+                    <div class="white--text ml-3 ">
+                        Made with
+                        <v-icon class="black--text ">♥</v-icon>
+                        by <a class="white--text" href="https://github.com/TomLavenziano " target="_blank ">Tom Lavenziano</a>, <a class="white--text " href="https://github.com/anupsahaNYC " target="_blank ">Anup Saha</a>, and Akhila Pamukuntla
+                    </div>
+                </v-flex>
+            </v-layout>
+        </v-footer>
+    </v-app>
+</div>
 </template>
 
 <style lang="less">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+@import 'assets/styles/app.less';
 </style>
+
+<script async defer src="https://buttons.github.io/buttons.js">
+</script>
+
+<script>
+export default {
+    name: 'App',
+    components: {},
+    data: () => ({
+        title: 'CodeRev | Open Source Code Review',
+    })
+};
+</script>
