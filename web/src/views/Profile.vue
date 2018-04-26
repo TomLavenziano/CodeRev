@@ -21,7 +21,7 @@
                     <v-card color="blue">
                         <v-card-title primary-title>
                             <div>
-                                <div style="color:white;font-size: 30px;">Bio</div>
+                                <div style="color:white;font-size: 30px;">{{user.id}}</div>
                                 <p style="color:white;font-size:20px">Lorem ipsum dolor sit amet, consectetur adipisicing elit. In totam fugiat aut tempora rerum obcaecati sed maiores ipsa quos quasi asperiores iure, nemo perferendis repudiandae fugit est id adipisci mollitia?</p>
                             </div>
                         </v-card-title>
@@ -29,7 +29,7 @@
                 </v-flex>
                 <v-flex xs6 sm3 offset-sm1>
                     <v-card>
-                        <v-list two-line style="padding: 0px"> 
+                        <v-list two-line style="padding: 0px">
                             <template>
                                 <v-list-tile style="background: #f6f8fa;">
                                     <v-list-tile-content>
@@ -43,9 +43,9 @@
                     <v-card>
                         <v-list two-line style="padding: 0px">
                             <template>
-                                <v-list-tile >
+                                <v-list-tile>
                                     <v-list-tile-content>
-                                        <v-list-tile-title style="color: blue">Akhila/<b>codeRev</b></v-list-tile-title>
+                                        <v-list-tile-title style="color: blue">{{user.login}}/<b>codeRev</b></v-list-tile-title>
                                     </v-list-tile-content>
                                 </v-list-tile>
                                 <v-divider></v-divider>
@@ -55,7 +55,7 @@
                 </v-flex>
                 <v-flex xs6 sm3 offset-sm1>
                     <v-card>
-                        <v-list two-line style="padding: 0px"> 
+                        <v-list two-line style="padding: 0px">
                             <template>
                                 <v-list-tile style="background: #f6f8fa;">
                                     <v-list-tile-content>
@@ -85,11 +85,26 @@
 </template>
 <script>
 import UserProfile from '@/components/UserProfile.vue'
+import axios from 'axios'
 
 export default {
     name: 'profile',
     components: {
         UserProfile
-    }
+    },
+    data() {
+        return {
+            user: {}
+        }
+    },
+    methods: {
+        getUsers: function() {
+            axios.get('https://api.github.com/user/10148379').then((response) => { this.user = response.data }, (error) => { console.log(error) });
+        }
+    },
+        mounted() {
+            console.log("hii")
+            this.getUsers()
+        }
 }
 </script>
