@@ -1,8 +1,5 @@
 <template>
-  <v-app>
-    <my-navpanel></my-navpanel>
-    <my-notifs></my-notifs>
-  </v-app>
+  <img src="./297byk.jpg"> 
 </template>
 
 <script>
