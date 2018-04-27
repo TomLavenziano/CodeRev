@@ -9,7 +9,7 @@
                         <v-card-title primary-title>
                             <div>
                                 <v-avatar>
-                                    <img v-bind:src="require('@/assets/user.png')" alt="John" style="width:100px; height:100px; margin-top:-70px;margin-left: 100px">
+                                    <a href="https://github.com/akhilapamukuntla" target="_blank" style="color: white"><img v-bind:src="require('@/assets/my pic.jpg')" alt="John" style="width:100px; height:100px; margin-top:-70px;margin-left: 100px"></a>
                                 </v-avatar>
                             </div>
                         </v-card-title>
@@ -21,8 +21,9 @@
                     <v-card color="blue">
                         <v-card-title primary-title>
                             <div>
-                                <div style="color:white;font-size: 30px;">{{user.id}}</div>
-                                <p style="color:white;font-size:20px">Lorem ipsum dolor sit amet, consectetur adipisicing elit. In totam fugiat aut tempora rerum obcaecati sed maiores ipsa quos quasi asperiores iure, nemo perferendis repudiandae fugit est id adipisci mollitia?</p>
+                                <div style="color:white;font-size: 30px;">{{user.login}}</div>
+                                <p style="color:white;font-size:20px">{{user.bio}}</p>
+
                             </div>
                         </v-card-title>
                     </v-card>
@@ -99,7 +100,7 @@ export default {
     },
     methods: {
         getUsers: function() {
-            axios.get('https://api.github.com/user/10148379').then((response) => { this.user = response.data }, (error) => { console.log(error) });
+            axios.get('https://api.github.com/user/36486548').then((response) => { this.user = response.data }, (error) => { console.log(error) });
         }
     },
         mounted() {
