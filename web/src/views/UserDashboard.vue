@@ -1,17 +1,11 @@
 <template>
-  <div id="UserDashboard">
-      Dashboard
+  <div>
+      <dlay/>
   </div>
 </template>
 <script>
 export default {
-    name: 'UserDashboard',
-    data: () => ({
-
-    }),
-    components: {
-
-    }
+    
 };
 </script>
 <style lang="less" scoped>
