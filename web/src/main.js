@@ -10,15 +10,15 @@ import './registerServiceWorker';
 import UserDashboard from './views/UserDashboard.vue';
 import NavPanel from './components/NavigationPanel.vue';
 import Notifications from './components/Notifications.vue';
-import dLay from './components/DashboardLayout.vue';
+import ProjectList from './components/ProjectList.vue';
 
 Vue.use(VueSession, { persist: true });
 Vue.use(Vuetify);
 
-Vue.component('d-lay', dLay);
 Vue.component('my-userdash', UserDashboard);
 Vue.component('my-navpanel', NavPanel);
 Vue.component('my-notifs', Notifications);
+Vue.component('my-projects', ProjectList);
 
 Vue.config.productionTip = false;
 
