@@ -12,10 +12,11 @@ import NavPanel from './components/NavigationPanel.vue';
 import ProjectList from './components/ProjectList.vue';
 import ProjectPanel from './components/ProjectPanel.vue';
 import Notifications from './components/Notifications.vue';
+import ToDo from './components/ToDo.vue';
 
 Vue.use(VueSession, { persist: true });
 Vue.use(Vuetify);
-
+Vue.component('my-todo', ToDo);
 Vue.component('my-userdash', UserDashboard);
 Vue.component('my-navpanel', NavPanel);
 Vue.component('my-projects', ProjectList);
