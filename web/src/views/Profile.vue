@@ -46,7 +46,7 @@
                         <template>
                                 <v-list-tile>
                                     <v-list-tile-content>
-                                        <v-list-tile-title style="color: blue"><a v-bind:href="RecipeLink.html_url" target="_blank">{{projects[1].repo.name}}</a></v-list-tile-title>
+                                        <v-list-tile-title style="color: blue"><a v-bind:href="RecipeLink.html_url" target="_blank">{{projects[4].repo.name}}</a></v-list-tile-title>
 
                                     </v-list-tile-content>
 
@@ -54,14 +54,14 @@
                                 <v-divider></v-divider>
                                 <v-list-tile>
                                  <v-list-tile-content>
-                                    <v-list-tile-title style="color: blue"><a v-bind:href="CharityLink.html_url" target="_blank">{{projects[4].repo.name}}</a></v-list-tile-title>
+                                    <v-list-tile-title style="color: blue"><a v-bind:href="CharityLink.html_url" target="_blank">{{projects[7].repo.name}}</a></v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                                 <v-divider></v-divider>
                                 <v-divider></v-divider>
                                 <v-list-tile>
                                  <v-list-tile-content>
-                                    <v-list-tile-title style="color: blue"><a v-bind:href="CoderevLink.html_url" target="_blank">{{projects[7].repo.name}}</a></v-list-tile-title>
+                                    <v-list-tile-title style="color: blue"><a v-bind:href="CoderevLink.html_url" target="_blank">{{projects[0].repo.name}}</a></v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                                 <v-divider></v-divider>
