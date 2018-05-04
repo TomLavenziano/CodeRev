@@ -5,8 +5,9 @@
   <v-card-title>Notifiications</v-card-title>
   </v-flex>
 </v-card>
-<v-card v-for:"item in items">
+<v-card v-for="item in items" :key="item.text">
   {{item.text}}
+
 </v-card>
 </div>
 </template>
