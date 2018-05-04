@@ -2,6 +2,7 @@
   <div id="ProjectDashboard">
       <div class="commits-container">
           <div v-for="commit in commits" :key="commit.key" class="card-panel">
+              <span>{{  }}</span>
               {{ commit.message }}
           </div>
       </div>
