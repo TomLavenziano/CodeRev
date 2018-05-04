@@ -9,7 +9,7 @@
                         <v-card-title primary-title>
                             <div>
                                 <v-avatar>
-                                    <a href="https://github.com/akhilapamukuntla" target="_blank" style="color: white"><img v-bind:src="require('@/assets/mypic.jpg')" alt="John" style="width:100px; height:100px; margin-top:-70px;margin-left: 100px"></a>
+                                    <a v-bind:href="user.html_url" target="_blank" style="color: white"><img v-bind:src="user.avatar_url" alt="John" style="width:100px; height:100px; margin-top:-70px;margin-left: 100px"></a>
                                 </v-avatar>
                             </div>
                         </v-card-title>
@@ -46,9 +46,24 @@
                         <template>
                                 <v-list-tile>
                                     <v-list-tile-content>
-                                        <v-list-tile-title style="color: blue">{{user.login}}/<b>codeRev</b></v-list-tile-title>
+                                        <v-list-tile-title style="color: blue"><a v-bind:href="RecipeLink.html_url" target="_blank">{{projects[1].repo.name}}</a></v-list-tile-title>
+                                        
                                     </v-list-tile-content>
+
                                 </v-list-tile>
+                                <v-divider></v-divider>
+                                <v-list-tile>
+                                 <v-list-tile-content>
+                                    <v-list-tile-title style="color: blue"><a v-bind:href="CharityLink.html_url" target="_blank">{{projects[4].repo.name}}</a></v-list-tile-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                                <v-divider></v-divider>
+                                <v-divider></v-divider>
+                                <v-list-tile>
+                                 <v-list-tile-content>
+                                    <v-list-tile-title style="color: blue"><a v-bind:href="CoderevLink.html_url" target="_blank">{{projects[7].repo.name}}</a></v-list-tile-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
                                 <v-divider></v-divider>
                             </template>
                     </v-list>
@@ -60,7 +75,7 @@
                         <template>
                                 <v-list-tile style="background: #f6f8fa;">
                                     <v-list-tile-content>
-                                        <v-list-tile-title><b style="font-size: 20px">Recent Commits/Reviews</b></v-list-tile-title>
+                                        <v-list-tile-title><b style="font-size: 20px">Recent Commits</b></v-list-tile-title>
                                     </v-list-tile-content>
                                 </v-list-tile>
                                 <v-divider></v-divider>
@@ -95,7 +110,12 @@ export default {
     },
     data() {
         return {
-            user: {}
+            user: {},
+            projects: {},
+            CoderevLink:{},
+            CharityLink:{},
+            RecipeLink:{}
+            
         };
     },
     methods: {
@@ -105,11 +125,49 @@ export default {
             }, error => {
                 console.log(error);
             });
+        },
+        getProjects: function () {
+            axios.get('https://api.github.com/users/akhilapamukuntla/events').then(response => {
+                this.projects = response.data;
+                // console.log(this.projects);
+            }, error => {
+                console.log(error);
+            });
+        },
+        getCharityLink: function () {
+            axios.get('https://api.github.com/repos/akhilapamukuntla/FreeCharity').then(response => {
+                this.CharityLink = response.data;
+                // console.log(this.projects);
+            }, error => {
+                console.log(error);
+            });
+        },
+        getCoderevLink: function () {
+            axios.get('https://api.github.com/repos/TomLavenziano/CodeRev').then(response => {
+                this.CoderevLink = response.data;
+                // console.log(this.projects);
+            }, error => {
+                console.log(error);
+            });
+        },
+        getRecipeLink: function () {
+            axios.get('https://api.github.com/repos/akhilapamukuntla/Recipe-Project').then(response => {
+                this.RecipeLink = response.data;
+                // console.log(this.projects);
+            }, error => {
+                console.log(error);
+            });
         }
+
     },
     mounted() {
         console.log('hii');
         this.getUsers();
+        this.getProjects();
+        this.getCharityLink();
+        this.getCoderevLink();
+        this.getRecipeLink();
+
     }
 };
 </script>
