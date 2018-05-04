@@ -22,7 +22,7 @@
                     <div class="white--text ml-3 ">
                         Made with
                         <v-icon class="black--text ">♥</v-icon>
-                        by <a class="white--text" href="https://github.com/TomLavenziano " target="_blank ">Tom Lavenziano</a>, <a class="white--text " href="https://github.com/anupsahaNYC " target="_blank ">Anup Saha</a>, and Akhila Pamukuntla
+                        by <a class="white--text" href="https://github.com/TomLavenziano " target="_blank ">Tom Lavenziano</a>, <a class="white--text " href="https://github.com/anupsahaNYC " target="_blank ">Anup Saha</a>, and <a class="white--text " href="https://github.com/akhilapamukuntla " target="_blank ">Akhila Pamukuntla</a>
                     </div>
                 </v-flex>
             </v-layout>
