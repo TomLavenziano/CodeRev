@@ -17,7 +17,7 @@
     </template>
     <template slot="expand" slot-scope="props">
       <v-card flat>
-        <v-card-text>Peek-a-boo!</v-card-text>
+        <v-card-text><proj-panel></proj-panel></v-card-text>
       </v-card>
     </template>
   </v-data-table>

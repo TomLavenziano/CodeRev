@@ -9,16 +9,18 @@ import './registerServiceWorker';
 
 import UserDashboard from './views/UserDashboard.vue';
 import NavPanel from './components/NavigationPanel.vue';
-import Notifications from './components/Notifications.vue';
 import ProjectList from './components/ProjectList.vue';
+import ProjectPanel from './components/ProjectPanel.vue';
+import Notifications from './components/Notifications.vue';
 
 Vue.use(VueSession, { persist: true });
 Vue.use(Vuetify);
 
 Vue.component('my-userdash', UserDashboard);
 Vue.component('my-navpanel', NavPanel);
-Vue.component('my-notifs', Notifications);
 Vue.component('my-projects', ProjectList);
+Vue.component('proj-panel', ProjectPanel);
+Vue.component('notif-card', Notifications);
 
 Vue.config.productionTip = false;
 

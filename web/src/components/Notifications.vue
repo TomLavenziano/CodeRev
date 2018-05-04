@@ -1,15 +1,7 @@
 <template>
-<v-layout>
-
-    <v-card>
-
-      <v-card-title primary-title>
-        <div>
-          <h3 class="headline mb-0">Notifications</h3>
-        </div>
-      </v-card-title>
-
-    </v-card>
-
-</v-layout>
+<v-card width = 50%>
+  <v-flex>
+  <v-card-title>Notifiications</v-card-title>
+  </v-flex>
+</v-card>
 </template>
