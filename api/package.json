@@ -31,7 +31,8 @@
         "passport-google-oauth": "^1.0.0",
         "passport-local": "^1.0.0",
         "passport-twitter": "^1.0.4",
-        "pg": "^4.5.1"
+        "pg": "^4.5.1",
+        "simple-git": "^1.92.0"
     },
     "devDependencies": {},
     "engines": {

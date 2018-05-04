@@ -47,7 +47,7 @@
                                 <v-list-tile>
                                     <v-list-tile-content>
                                         <v-list-tile-title style="color: blue"><a v-bind:href="RecipeLink.html_url" target="_blank">{{projects[1].repo.name}}</a></v-list-tile-title>
-                                        
+
                                     </v-list-tile-content>
 
                                 </v-list-tile>
@@ -115,7 +115,7 @@ export default {
             CoderevLink:{},
             CharityLink:{},
             RecipeLink:{}
-            
+
         };
     },
     methods: {
@@ -169,5 +169,5 @@ export default {
         this.getRecipeLink();
 
     }
-};
+}
 </script>

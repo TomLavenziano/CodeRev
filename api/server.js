@@ -20,7 +20,9 @@ dotenv.config();
 // Controllers
 const HomeController = require('./controllers/home');
 const userController = require('./controllers/user');
-const contactController = require('./controllers/contact');
+const ContactController = require('./controllers/contact');
+const ProjectController = require('./controllers/project');
+const GitController = require('./controllers/gitActions');
 
 // Passport OAuth strategies
 require('./config/passport');
@@ -48,8 +50,10 @@ app.use(function(req, res, next) {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', HomeController.index);
-app.get('/contact', contactController.contactGet);
-app.post('/contact', contactController.contactPost);
+app.get('/contact', ContactController.contactGet);
+app.post('/contact', ContactController.contactPost);
+app.get('/project/owner/:owner', ProjectController.getProjectsByUser);
+app.get('/project/:id', ProjectController.getProjectByID);
 app.get('/account', userController.ensureAuthenticated, userController.accountGet);
 app.put('/account', userController.ensureAuthenticated, userController.accountPut);
 app.delete('/account', userController.ensureAuthenticated, userController.accountDelete);
@@ -74,6 +78,9 @@ app.get('/auth/github/callback', passport.authenticate('github'), (req, res) => 
     console.log(req.user.attributes.github_username);
     res.redirect(`http://localhost:8080?g_id=${req.user.attributes.github_username}`);
 });
+
+app.get('/git/status', GitController.getStatus);
+app.get('/git/commits', GitController.getCommits);
 
 (() => {
     const envStatus = app.get('env').charAt(0).toUpperCase() + app.get('env').slice(1);
