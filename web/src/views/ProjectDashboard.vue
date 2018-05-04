@@ -1,12 +1,12 @@
 <template>
   <div id="ProjectDashboard">
-      <h1>Project</h1>
-      <div class="commits-container card-panel">
-          {{ commits }}
+      <div class="commits-container">
+          <div v-for="commit in commits" :key="commit.key" class="card-panel">
+              {{ commit.message }}
+          </div>
       </div>
       <div class="review-container card-panel">
           {{ project }}
-
       </div>
   </div>
 </template>
@@ -29,8 +29,8 @@ export default {
         });
 
         vhttp.get('git/commits').then(res => {
-            this.commits = res.data;
-        })
+            this.commits = res.data.all;
+        });
     }
 };
 </script>
@@ -49,10 +49,10 @@ export default {
     }
 
     .commits-container {
-        width: 40%;
+        width: 50%;
     }
 
     .review-container {
-        width: 40%;
+        width: 50%;
     }
 </style>
