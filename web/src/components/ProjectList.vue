@@ -18,12 +18,14 @@
     <template slot="expand" slot-scope="props">
       <v-card flat>
         <v-card-text><proj-panel></proj-panel></v-card-text>
+        
       </v-card>
     </template>
   </v-data-table>
 </template>
 
 <script>
+import axios from 'axios';
   export default {
     data () {
       return {
@@ -49,8 +51,19 @@
             todos: 1
 
           }
-        ]
+        ],
+        rdata:[ ],
+        comm: 0
       }
+    },
+    methods: {
+      getData(){
+        
+        
+      }
+    },
+    created() {
+      axios.get('https://api.github.com/repos/TomLavenziano/CodeRev/events').then(res=> this.rdata = res.data )
     }
   }
 </script>
