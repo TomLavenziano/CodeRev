@@ -75,16 +75,13 @@ app.post('/reset/:token', userController.resetPost);
 
 app.get('/logout', userController.logout);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
-// app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'user_location']}));
-// app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }));
-// app.get('/auth/google', passport.authenticate('google', { scope: 'profile email' }));
-// app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/', failureRedirect: '/login' }));
+
 app.get('/auth/github', passport.authenticate('github'));
-app.get('/auth/github/callback', passport.authenticate('github', { successRedirect: `https://localhost:8080?g_id=${req.user.attributes.github_username}`, failureRedirect: '/login' }));
-// app.get('/auth/github/callback', passport.authenticate('github'), (req, res) => {
-//     console.log(req.user.attributes.github_username);
-//     res.redirect(`https://localhost:8080?g_id=${req.user.attributes.github_username}`);
-// });
+// app.get('/auth/github/callback', passport.authenticate('github', { successRedirect: `https://localhost:8080?g_id=${req.user.attributes.github_username}`, failureRedirect: '/login' }));
+app.get('/auth/github/callback', passport.authenticate('github'), (req, res) => {
+    console.log(req.user.attributes.github_username);
+    res.redirect(`https://localhost:8080?g_id=${req.user.attributes.github_username}`);
+});
 
 app.get('/repo/status', RepoController.getStatus);
 app.get('/repo/commits', RepoController.getCommits);
