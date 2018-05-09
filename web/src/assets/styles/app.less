@@ -1,7 +1,8 @@
 @import './imports.less';
 
-html, body {
-  height: 100%;
+body,
+html {
+    height: 100%;
 }
 
 #app {
@@ -11,13 +12,14 @@ html, body {
 }
 
 .title-bar {
-    font-size: 2em;
+    font-size: 3em;
     color: @landing-title;
 }
 
 .top-navigation {
     position: relative;
     left: 50%;
+
     a {
         font-size: 3vh;
         font-weight: bold;
@@ -27,9 +29,11 @@ html, body {
         text-decoration: none;
         border-radius: 5px;
         transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
         &.router-link-exact-active {
             color: #2290f5;
         }
+
         &:hover {
             // box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
             border: 1px solid #E9E9E9;
