@@ -1,7 +1,12 @@
+const fs = require('fs-extra');
+const path = require('path-extra');
+const urljoin = require('url-join');
 const async = require('async');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const passport = require('passport');
+const http = require('request-promise-native');
+const git = require('simple-git');
 const User = require('../models/User');
 
 /**
@@ -113,9 +118,10 @@ exports.signupPost = function(req, res, next) {
  * GET /account
  */
 exports.accountGet = function(req, res) {
-    res.render('account/profile', {
-        title: 'My Account'
-    });
+    res.json(req.user);
+    // res.render('account/profile', {
+    //     title: 'My Account'
+    // });
 };
 
 /**
@@ -357,4 +363,25 @@ exports.resetPost = function(req, res, next) {
             });
         }
     ]);
+};
+
+exports.getGitHubRepos = (req, res) => {
+    console.log('Getting repos...');
+    const repoUrl = req.user.attributes.repos_url;
+    const options = {
+        uri: repoUrl,
+        json: true,
+        headers: {
+            'User-Agent': 'Request-Promise'
+        }
+    };
+    http(options).then(repos => res.json(repos));
+};
+
+exports.importProjectFromGitHub = (req, res) => {
+    const cloneUrl = req.body.repo.clone_url;
+    const repoPath = path.join(process.env.REPOS_PATH, req.user.attributes.username, req.body.repo.name);
+    git.clone(cloneUrl, repoPath).then(() => {
+        res.json({ repoPath: repoPath });
+    });
 };

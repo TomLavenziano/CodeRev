@@ -1,7 +1,8 @@
+const fs = require('fs-extra');
+const path = require('path');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GithubStrategy = require('passport-github2').Strategy;
-
 
 const User = require('../models/User');
 
@@ -51,9 +52,9 @@ passport.use(new GithubStrategy({
                 new User({ id: req.user.id })
                     .fetch()
                     .then(function(user) {
+                        user.set('id', profile.id);
                         user.set('name', user.get('name') || profile.displayName);
                         user.set('picture', user.get('picture') || profile.avatar_url);
-                        user.set('github', profile.id);
                         user.save(user.changed, { patch: true }).then(function() {
                             req.flash('success', { msg: 'Your GitHub account is now linked.' });
                             done(null, user);
@@ -62,30 +63,19 @@ passport.use(new GithubStrategy({
             });
     } else {
         console.log('NOTE: req.user does not exist');
-        new User({ github: profile.id })
+        new User({ id: profile.id })
             .fetch()
-            .then(function(user) {
-                // if (user) {
-                //     console.log('Oh No');
-                //     return done(null, user);
-                // }
-                // new User({ email: profile.emails[0].value })
-                //     .fetch()
-                //     .then(function(user) {
-                //         if (user) {
-                //             req.flash('error', { msg: user.get('email') + ' is already associated with another account.' });
-                //             return done();
-                //         }
-                //         user = new User();
+            .then(user => {
+                fs.ensureDir(path.join(process.env.REPOS_PATH, profile.username));
                 user.set('name', profile.displayName);
                 user.set('email', profile.emails[0].value);
                 user.set('location', profile._json.location);
                 user.set('picture', profile._json.avatar_url);
                 user.set('repos_url', profile._json.repos_url);
-                user.set('github', profile.id);
                 user.set('github_username', profile._json.login);
-                user.save().then(user => done(null, user));
-                // });
+                user.set('github_json', profile);
+                user.save()
+                    .then(user => done(null, user));
             });
     }
 }));

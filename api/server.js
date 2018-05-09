@@ -19,7 +19,7 @@ dotenv.config();
 
 // Controllers
 const HomeController = require('./controllers/home');
-const userController = require('./controllers/user');
+const UserController = require('./controllers/user');
 const ContactController = require('./controllers/contact');
 const ProjectController = require('./controllers/project');
 const RepoController = require('./controllers/repo');
@@ -57,24 +57,24 @@ app.post('/contact', ContactController.contactPost);
 app.get('/project/owner/:owner', ProjectController.getProjectsByUser);
 app.get('/project/:id', ProjectController.getProjectByID);
 
-app.get('/account', userController.ensureAuthenticated, userController.accountGet);
-app.put('/account', userController.ensureAuthenticated, userController.accountPut);
-app.delete('/account', userController.ensureAuthenticated, userController.accountDelete);
+app.get('/account', UserController.ensureAuthenticated, UserController.accountGet);
+app.put('/account', UserController.ensureAuthenticated, UserController.accountPut);
+app.delete('/account', UserController.ensureAuthenticated, UserController.accountDelete);
 
-app.get('/signup', userController.signupGet);
-app.post('/signup', userController.signupPost);
+app.get('/signup', UserController.signupGet);
+app.post('/signup', UserController.signupPost);
 
-app.get('/login', userController.loginGet);
-app.post('/login', userController.loginPost);
+app.get('/login', UserController.loginGet);
+app.post('/login', UserController.loginPost);
 
-app.get('/forgot', userController.forgotGet);
-app.post('/forgot', userController.forgotPost);
+app.get('/forgot', UserController.forgotGet);
+app.post('/forgot', UserController.forgotPost);
 
-app.get('/reset/:token', userController.resetGet);
-app.post('/reset/:token', userController.resetPost);
+app.get('/reset/:token', UserController.resetGet);
+app.post('/reset/:token', UserController.resetPost);
 
-app.get('/logout', userController.logout);
-app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
+app.get('/logout', UserController.logout);
+app.get('/unlink/:provider', UserController.ensureAuthenticated, UserController.unlink);
 
 app.get('/auth/github', passport.authenticate('github'));
 // app.get('/auth/github/callback', passport.authenticate('github', { successRedirect: `https://localhost:8080?g_id=${req.user.attributes.github_username}`, failureRedirect: '/login' }));
@@ -85,6 +85,8 @@ app.get('/auth/github/callback', passport.authenticate('github'), (req, res) => 
 
 app.get('/repo/status', RepoController.getStatus);
 app.get('/repo/commits', RepoController.getCommits);
+
+app.get('/github/repos', UserController.getGitHubRepos);
 
 
 (() => {
