@@ -2,7 +2,7 @@
 <div id="app">
     <v-app light>
         <!-- Top Navigation -->
-        <v-toolbar class="white" app>
+        <v-toolbar class="blue darken-2" app>
             <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-toolbar-title class="title-bar">CodeRev</v-toolbar-title>
             <div class="top-navigation">
