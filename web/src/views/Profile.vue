@@ -46,7 +46,7 @@
                         <template>
                                 <v-list-tile>
                                     <v-list-tile-content>
-                                        <v-list-tile-title style="color: blue"><a v-bind:href="RecipeLink.html_url" target="_blank">{{projects[4].repo.name}}</a></v-list-tile-title>
+                                        <v-list-tile-title style="color: blue"><a v-bind:href="RecipeLink.html_url" target="_blank">{{projects[3].repo.name}}</a></v-list-tile-title>
 
                                     </v-list-tile-content>
 
@@ -54,7 +54,7 @@
                                 <v-divider></v-divider>
                                 <v-list-tile>
                                  <v-list-tile-content>
-                                    <v-list-tile-title style="color: blue"><a v-bind:href="CharityLink.html_url" target="_blank">{{projects[7].repo.name}}</a></v-list-tile-title>
+                                    <v-list-tile-title style="color: blue"><a v-bind:href="CharityLink.html_url" target="_blank">{{projects[6].repo.name}}</a></v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                                 <v-divider></v-divider>
@@ -75,7 +75,7 @@
                         <template>
                                 <v-list-tile style="background: #f6f8fa;">
                                     <v-list-tile-content>
-                                        <v-list-tile-title><b style="font-size: 20px">Recent Commits</b></v-list-tile-title>
+                                        <v-list-tile-title><b style="font-size: 20px">Following</b></v-list-tile-title>
                                     </v-list-tile-content>
                                 </v-list-tile>
                                 <v-divider></v-divider>

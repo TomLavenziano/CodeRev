@@ -1,8 +1,8 @@
-const simpleGit = require('simple-git');
+const git = require('simple-git');
 const path = '../';
 
 exports.getStatus = (req, res) => {
-    simpleGit(path)
+    git(path)
         // .listRemote(['--get-url'], (err, data) => {
         //     if (!err) {
         //         console.log('Remote url for repository at ' + __dirname + ':');
@@ -13,6 +13,6 @@ exports.getStatus = (req, res) => {
 };
 
 exports.getCommits = (req, res) => {
-    simpleGit(path)
+    git(path)
         .log((err, data) => res.json(data));
 };

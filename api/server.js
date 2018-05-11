@@ -22,7 +22,7 @@ const HomeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const ContactController = require('./controllers/contact');
 const ProjectController = require('./controllers/project');
-const GitController = require('./controllers/gitActions');
+const RepoController = require('./controllers/repo');
 
 // Passport OAuth strategies
 require('./config/passport');
@@ -50,37 +50,42 @@ app.use(function(req, res, next) {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', HomeController.index);
+
 app.get('/contact', ContactController.contactGet);
 app.post('/contact', ContactController.contactPost);
+
 app.get('/project/owner/:owner', ProjectController.getProjectsByUser);
 app.get('/project/:id', ProjectController.getProjectByID);
+
 app.get('/account', userController.ensureAuthenticated, userController.accountGet);
 app.put('/account', userController.ensureAuthenticated, userController.accountPut);
 app.delete('/account', userController.ensureAuthenticated, userController.accountDelete);
+
 app.get('/signup', userController.signupGet);
 app.post('/signup', userController.signupPost);
+
 app.get('/login', userController.loginGet);
 app.post('/login', userController.loginPost);
+
 app.get('/forgot', userController.forgotGet);
 app.post('/forgot', userController.forgotPost);
+
 app.get('/reset/:token', userController.resetGet);
 app.post('/reset/:token', userController.resetPost);
+
 app.get('/logout', userController.logout);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
-app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'user_location']}));
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }));
-app.get('/auth/google', passport.authenticate('google', { scope: 'profile email' }));
-app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/', failureRedirect: '/login' }));
+
 app.get('/auth/github', passport.authenticate('github'));
-// app.get('/auth/github/callback', passport.authenticate('github', { successRedirect: 'http://localhost:8080', failureRedirect: '/login' }));
+// app.get('/auth/github/callback', passport.authenticate('github', { successRedirect: `https://localhost:8080?g_id=${req.user.attributes.github_username}`, failureRedirect: '/login' }));
 app.get('/auth/github/callback', passport.authenticate('github'), (req, res) => {
-    console.log('\n\n');
     console.log(req.user.attributes.github_username);
-    res.redirect(`http://localhost:8080?g_id=${req.user.attributes.github_username}`);
+    res.redirect(`https://localhost:8080?g_id=${req.user.attributes.github_username}`);
 });
 
-app.get('/git/status', GitController.getStatus);
-app.get('/git/commits', GitController.getCommits);
+app.get('/repo/status', RepoController.getStatus);
+app.get('/repo/commits', RepoController.getCommits);
+
 
 (() => {
     const envStatus = app.get('env').charAt(0).toUpperCase() + app.get('env').slice(1);
