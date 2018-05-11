@@ -111,6 +111,18 @@ app.get('/auth/github/callback', passport.authenticate('github'), (req, res) => 
 app.get('/repo/status', RepoController.getStatus);
 
 
+// Production error handler
+if (app.get('env') === 'production') {
+    app.use((err, req, res, next) => {
+        if (res.headersSent) {
+            return next(err);
+        }
+        console.error(err.stack);
+        res.sendStatus(err.status || 500);
+    });
+}
+
+
 /* ------ Launch Server ------ */
 
 (() => {
@@ -119,15 +131,6 @@ app.get('/repo/status', RepoController.getStatus);
         key: fs.readFileSync('ssl/key.pem'),
         cert: fs.readFileSync('ssl/cert.pem')
     };
-
-    // Production error handler
-    if (app.get('env') === 'production') {
-        app.use((err, req, res, next) => {
-            console.error(err.stack);
-            res.sendStatus(err.status || 500);
-        });
-    }
-
 
     process.stdout.write('\x1bc'); // Clear console
     console.log('\x1b[48;5;4m\x1b[30m%s\x1b[0m\x1b[38;5;4m%s\x1b[0m\x1b[38;5;4m\x1b[5m%s\x1b[0m',
