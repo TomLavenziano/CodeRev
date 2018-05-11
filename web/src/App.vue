@@ -9,7 +9,7 @@
                 <router-link to="/">Home</router-link>
                 <router-link to="/dashboard">Dashboard</router-link>
                 <router-link to="/profile">Profile</router-link>
-                <router-link to="/projectlist">Project List</router-link>
+                <!-- <router-link to="/projectlist">Project List</router-link> -->
             </div>
         </v-toolbar>
 
@@ -107,13 +107,13 @@ export default {
                     icon: 'home',
                     path: '/'
                 },
+                // {
+                //     title: 'Dashboard',
+                //     icon: 'dashboard',
+                //     path: '/dashboard'
+                // },
                 {
-                    title: 'Dashboard',
-                    icon: 'dashboard',
-                    path: '/dashboard'
-                },
-                {
-                    title: 'Projects',
+                    title: 'My Projects',
                     icon: 'work',
                     path: '/projects'
                 },
