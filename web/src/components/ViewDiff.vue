@@ -16,19 +16,22 @@ export default {
             diffHtml: ''
         };
     },
-    props: ['pid'],
+    props: ['pid', 'raw'],
     created() {
         this.generateHtmlFromDiff();
     },
     methods: {
         generateHtmlFromDiff() {
-            api.get(`project/repo/diff/${this.pid}`).then(res => {
-                console.log(res.data);
-                this.rawDiff = res.data;
-                this.diffHtml = Diff2Html.getPrettyHtml(res.data.diff, {inputFormat: 'diff', showFiles: true, matching: 'lines'});
-
-            });
-
+            if (this.raw) {
+                console.log(this.raw);
+                this.diffHtml = Diff2Html.getPrettyHtml(this.raw.diff, { inputFormat: 'diff', showFiles: true, matching: 'lines' });
+            } else {
+                api.get(`project/repo/diff/${this.pid}`).then(res => {
+                    console.log(res.data);
+                    this.rawDiff = res.data.diff;
+                    this.diffHtml = Diff2Html.getPrettyHtml(res.data.diff, { inputFormat: 'diff', showFiles: true, matching: 'lines' });
+                });
+            }
         }
     }
 };

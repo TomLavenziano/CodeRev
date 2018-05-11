@@ -120,16 +120,25 @@ exports.getDiffByHash = (req, res) => {
     const hash = req.params.hash;
 
     getProjectRepoPath(id).then(path => {
-        // git(path).diff()
+        git(path).diff();
     });
 };
 
 exports.getHeadCommitFiles = (req, res) => {
     const id = req.params.id;
-    const hash = req.params.hash;
+    // const hash = req.params.hash;
 
     getProjectRepoPath(id).then(path => {
-        git(path).show((err, data) => {
+        console.info('PATHHEAD: ' + path);
+        // git(path).show((err, data) => {
+        //     res.json(data);
+        // });
+        git(path).raw([
+            'show',
+            // 'HEAD^',
+            'HEAD'
+        ], (err, data) => {
+            console.info(data);
             res.json(data);
         });
     });

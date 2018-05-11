@@ -3,7 +3,7 @@
       <div class="project-info-card card-panel">
           <div class="">
               <span> {{ project.name }} </span>
-              <div class="small-section"> {{ project.github_fullname }} </div>
+              <div class="small-section"> {{ project.github_fullname }} ({{ project.id }})</div>
           </div>
           <hr />
           <div class="">
@@ -26,6 +26,7 @@
 
           <div class="review-container card-panel">
               <!-- {{ project }} -->
+              <!-- <ViewDiff :raw="showDiff.diff"></ViewDiff> -->
               <ViewDiff :pid="id"></ViewDiff>
           </div>
       </div>
@@ -66,6 +67,7 @@ export default {
         });
 
         api.get(`project/${this.id}/repo/files`).then(res => {
+            console.info(this.showDiff);
             this.showDiff = res.data;
         });
     }
