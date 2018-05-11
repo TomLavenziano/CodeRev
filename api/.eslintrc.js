@@ -143,7 +143,7 @@ module.exports = {
         // 'no-use-before-define': ['error', 'nofunc'],
         // Disabled because of https://github.com/eslint/eslint/issues/3420
         // 'callback-return': ['warn', ['cb', 'callback', 'next', 'done']],
-        'handle-callback-err': 'warn',
+        // 'handle-callback-err': 'warn',
         'no-buffer-constructor': 'error',
         'no-mixed-requires': [
             'error',
@@ -240,7 +240,7 @@ module.exports = {
                 max: 2
             }
         ],
-        'no-negated-condition': 'error',
+        // 'no-negated-condition': 'error',
         'no-new-object': 'error',
         'no-restricted-syntax': ['error', 'WithStatement'],
         'no-whitespace-before-property': 'error',
