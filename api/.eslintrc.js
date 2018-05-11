@@ -165,12 +165,12 @@ module.exports = {
                 allowSingleLine: true
             }
         ],
-        camelcase: [
-            'error',
-            {
-                properties: 'always'
-            }
-        ],
+        // camelcase: [
+        //     'error',
+        //     {
+        //         properties: 'always'
+        //     }
+        // ],
         // 'capitalized-comments': ['error', 'always', {
         //     // You can also ignore this rule by wrapping the first word in quotes
         //     ignorePattern: 'pragma|ignore',

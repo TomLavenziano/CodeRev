@@ -107,8 +107,8 @@ module.exports = {
         'no-octal': 'error',
         'no-proto': 'error',
         'no-redeclare': 'error',
-        'no-return-assign': ['error', 'always'],
-        'no-return-await': 'error',
+        // 'no-return-assign': ['error', 'always'],
+        // 'no-return-await': 'error',
         'no-script-url': 'error',
         'no-self-assign': ['error', {props: true}],
         'no-self-compare': 'error',
@@ -170,12 +170,12 @@ module.exports = {
                 allowSingleLine: true
             }
         ],
-        camelcase: [
-            'error',
-            {
-                properties: 'always'
-            }
-        ],
+        // camelcase: [
+        //     'error',
+        //     {
+        //         properties: 'always'
+        //     }
+        // ],
         // 'capitalized-comments': ['error', 'always', {
         //     // You can also ignore this rule by wrapping the first word in quotes
         //     ignorePattern: 'pragma|ignore',
