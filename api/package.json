@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "description": "Team-driven Code Review for OSS projects",
     "scripts": {
-        "start": "node server.js"
+        "start": "node server.js",
+        "debug": "node --inspect server.js"
     },
     "dependencies": {
         "async": "^1.5.2",
