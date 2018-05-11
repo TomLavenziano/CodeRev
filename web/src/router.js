@@ -5,6 +5,8 @@ import Profile from './views/Profile.vue';
 import UserDashboard from './views/UserDashboard.vue';
 import ProjectDashboard from './views/ProjectDashboard.vue';
 import ProjectList from './views/ProjectList.vue';
+import ReviewCommit from './views/ReviewCommit.vue';
+import ViewReview from './views/ViewReview.vue';
 
 Vue.use(Router);
 
@@ -17,11 +19,6 @@ export default new Router({
             component: Landing
         },
         {
-            path: '/profile',
-            name: 'profile',
-            component: Profile
-        },
-        {
             path: '/project/:id',
             name: 'ProjectDashboard',
             props: true,
@@ -32,8 +29,21 @@ export default new Router({
             component: ProjectList
         },
         {
+            path: '/review',
+            component: ViewReview
+        },
+        {
+            path: '/reviewcommit',
+            component: ReviewCommit
+        },
+        {
             path: '/dashboard',
             component: UserDashboard
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: Profile
         }
     ]
 });
