@@ -57,7 +57,8 @@ exports.importProjectFromGitHub = (req, res) => {
     console.info('Importing from GitHub...');
     const repo = req.body;
     const cloneUrl = repo.clone_url;
-    const repoPath = path.join(process.env.REPOS_PATH, repo.owner.login, repo.name);
+    const upstreamPath = path.join(process.env.REPOS_PATH, repo.owner.login, repo.name);
+    const repoPath = path.join(process.env.REPOS_PATH, repo.owner.login);
     const project = {
         id: repo.id,
         name: repo.name,
@@ -67,16 +68,16 @@ exports.importProjectFromGitHub = (req, res) => {
         github_owner_id: repo.owner.id,
         github_upstream: repo.clone_url,
         github_json: JSON.stringify(repo),
-        coderev_upstream: repoPath
+        coderev_upstream: upstreamPath
     };
 
-    new Project(project)
-        .save(null, { method: 'insert' })
+    new Project({ id: repo.id })
+        .save(project)
         .then(model => {
-            console.info('MODEL: ');
-            console.info(model);
-            git.clone(cloneUrl, repoPath).then(() => {
-                res.json({ id: model.id, repoPath: repoPath });
+            console.info('CodeRev project succesfully created');
+            git(repoPath).clone(cloneUrl, res => {
+                console.info('GitHub repo successfully cloned');
             });
+            res.json({ id: model.id, repoPath: upstreamPath });
         });
 };
