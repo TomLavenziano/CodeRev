@@ -77,6 +77,10 @@ app.post('/contact', ContactController.contactPost);
 app.get('/project', ProjectController.getCodeRevProjects);
 app.get('/project/owner/:owner', ProjectController.getProjectsByUser);
 app.get('/project/:id', ProjectController.getProjectByID);
+
+app.get('/project/repo/diff/:id', ProjectController.getCurrentDiff);
+app.get('/project/repo/commits/:id', ProjectController.getCommits);
+
 app.get('/project/github/repos', ProjectController.getGitHubRepos);
 app.post('/project/github/import', ProjectController.importProjectFromGitHub);
 
@@ -101,11 +105,10 @@ app.get('/unlink/:provider', UserController.ensureAuthenticated, UserController.
 
 app.get('/auth/github', passport.authenticate('github'));
 app.get('/auth/github/callback', passport.authenticate('github'), (req, res) => {
-    res.redirect(`https://lvh.me:8080?uid=${req.user.attributes.id}&uname=${req.user.attributes.github_username}&s=${req.session.id}`);
+    res.redirect(`https://lvh.me:8080`);
 });
 
 app.get('/repo/status', RepoController.getStatus);
-app.get('/repo/commits', RepoController.getCommits);
 
 
 /* ------ Launch Server ------ */

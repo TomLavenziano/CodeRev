@@ -1,17 +1,29 @@
 <template>
   <div id="ProjectDashboard">
-      <div class="commits-container">
-          <div v-for="commit in commits" :key="commit.key" class="card-panel">
-              <span> {{ commit.message }} </span>
+      <div class="project-name card-panel">
+          {{ project.name }}
+      </div>
+      <div class="info-container">
+          <div class="commits-container">
+              <div v-for="commit in commits" :key="commit.key" class="card-panel commit-card">
+                  <div class="commit-message"> {{ commit.message }} </div>
+                  <hr />
+                  <div class="commit-author"> {{ commit.author_name }}
+                      <span class="commit-time">committed {{ commit.time }}</span>
+                  </div>
+              </div>
+          </div>
+          <div class="review-container card-panel">
+              {{ project }}
           </div>
       </div>
-      <div class="review-container card-panel">
-          {{ project }}
-      </div>
+
   </div>
 </template>
 <script>
 import api from '../http-global';
+import ta from 'time-ago';
+
 export default {
     name: 'ProjectDashboard',
     data: () => ({
@@ -21,15 +33,18 @@ export default {
     props: ['id'],
     created() {
         console.log('Project dashboard');
-        const id = this.id;
-        console.log('ID:' + id);
-        api.get(`project/${id}`).then(res => {
+        console.log('ID:' + this.id);
+        api.get(`project/${this.id}`).then(res => {
             console.log(res.data);
             this.project = res.data;
         });
 
-        api.get('git/commits').then(res => {
-            this.commits = res.data.all;
+        api.get(`project/repo/commits/${this.id}`).then(res => {
+            this.commits = res.data.all.map(commit => {
+                commit.time = ta.ago(commit.date);
+                return commit;
+            });
+            console.log(this.commits[0]);
         });
     }
 };
@@ -45,14 +60,47 @@ export default {
     }
 
     #ProjectDashboard {
-        display: inline-flex;
+        display: inline-block;
+    }
+    .project-name {
+        width: 99%;
+        font-size: 3em;
+        font-weight: bold;
+        padding-left: 10px;
     }
 
-    .commits-container {
-        width: 50%;
-    }
+    .info-container {
+        width: 100%;
+        display: inline-flex;
+        .commits-container {
+            width: 50%;
+            float: left;
+
+            & .commit-card {
+                padding: 5px;
+
+                & .commit-message {
+                    font-weight: 500;
+                    font-size: 1.5em;
+                    color: #222;
+                }
+
+                & .commit-author {
+                    padding-top: 5px;
+                    font-size: 1.25em;
+                    font-weight: 500;
+                    color: #555;
+
+                    & .commit-time {
+                        font-weight: 400;
+                    }
+                }
+            }
+        }
 
     .review-container {
         width: 50%;
+        float: right;
     }
+}
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div id="ProjectList">
-          <div class="section-title">- CodeRev Projects -</div>
+          <div class="section-title">CodeRev Projects</div>
       <ListProjectCards></ListProjectCards>
-          <div class="section-title">- Or Add a Project from GitHub -</div>
+          <div class="section-title or">- Or Add a Project from GitHub -</div>
       <AddProjectDialog></AddProjectDialog>
   </div>
 </template>
@@ -25,13 +25,19 @@ export default {
 </script>
 <style lang="less" scoped>
     #ProjectList {
-        width: 50%;
+        width: 90%;
         margin: 0 auto;
 
         & .section-title {
+            color: #333;
             text-align: center;
-            font-size: 2em;
-            font-weight: bold;
+            font-size: 3.5em;
+            font-weight: 500;
+
+            &.or {
+                font-size: 2.5em;
+                font-weight: 400;
+            }
         }
     }
 </style>

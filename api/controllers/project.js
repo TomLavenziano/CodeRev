@@ -70,14 +70,48 @@ exports.importProjectFromGitHub = (req, res) => {
         github_json: JSON.stringify(repo),
         coderev_upstream: upstreamPath
     };
+    console.info('Project to be stored:');
+    console.log(project);
 
-    new Project({ id: repo.id })
-        .save(project)
+    new Project(project)
+        .save(null, { method: 'insert' })
         .then(model => {
+            console.info('Model Retrieved: ' + !!model);
             console.info('CodeRev project succesfully created');
-            git(repoPath).clone(cloneUrl, res => {
+            git(repoPath).clone(cloneUrl, () => {
                 console.info('GitHub repo successfully cloned');
             });
             res.json({ id: model.id, repoPath: upstreamPath });
         });
 };
+
+exports.getCommits = (req, res) => {
+    console.info('Getting commits...');
+    getProjectRepoPath(req.params.id).then(path => {
+        console.info(path);
+        git(path).log((err, data) => res.json(data));
+    });
+};
+
+exports.getCurrentDiff = (req, res) => {
+    console.log('Getting diff...');
+    const pID = req.params.id;
+    new Project({ id: pID })
+        .fetch()
+        .then(c => {
+            git(c.coderev_upstream).diff(diff => {
+                res.json({ diff: diff });
+            });
+        });
+};
+
+
+function getProjectRepoPath(projectID) {
+    console.log('ID recieved: ' + projectID);
+    return new Promise((resolve, reject) => {
+        new Project({ id: projectID })
+            .fetch()
+            .then(c => resolve(c.attributes.coderev_upstream))
+            .catch(reject);
+    });
+}
