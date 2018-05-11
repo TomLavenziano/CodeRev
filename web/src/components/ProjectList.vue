@@ -1,4 +1,9 @@
 <template>
+
+
+
+
+
   <v-data-table
     :headers="headers"
     :items="items"
@@ -21,8 +26,18 @@
         
       </v-card>
     </template>
+    
   </v-data-table>
+  
 </template>
+
+<!--
+  <div v-for="event in events"> 
+      {{ event.id }}
+      {{ event.commits[0].author.email }}
+
+  </div>
+-->
 
 <script>
 import axios from 'axios';
@@ -52,7 +67,7 @@ import axios from 'axios';
 
           }
         ],
-        rdata:[ ],
+        events: [],
         comm: 0
       }
     },
@@ -63,8 +78,18 @@ import axios from 'axios';
       }
     },
     created() {
-      axios.get('https://api.github.com/repos/TomLavenziano/CodeRev/events').then(res=> this.rdata = res.data )
-    }
+      console.log('Getting Event data...')
+      axios.get('https://api.github.com/repos/TomLavenziano/CodeRev/events').then(res => {
+        this.events = Object.values(res.data).map((event, index) => {
+          return {
+            id: event.id,
+            commits: event.payload.commits || {}
+          }
+        });
+        console.log(this.events);        
+      });
+   }
+
   }
 </script>
 
