@@ -14,7 +14,7 @@ const expressValidator = require('express-validator');
 const dotenv = require('dotenv');
 const passport = require('passport');
 
-// Load environment variables from .env file
+require('manakin').global;
 dotenv.config();
 
 // Controllers
@@ -39,23 +39,46 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(methodOverride('_method'));
-app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true }));
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    saveUninitialized: true,
+    resave: false,
+    cookie: {
+        maxAge: 72000000,
+        httpOnly: false,
+        sameSite: false
+    }
+}));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Expose-Headers', 'Access-Control-*, Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.setHeader('Access-Control-Allow-Origin', process.env.ACCESS_ORIGIN);
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Access-Control-*, Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
 app.use(function(req, res, next) {
     res.locals.user = req.user ? req.user.toJSON() : null;
     next();
 });
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+/* ------ Routing ------ */
+
 app.get('/', HomeController.index);
 
 app.get('/contact', ContactController.contactGet);
 app.post('/contact', ContactController.contactPost);
 
+app.get('/project', ProjectController.getCodeRevProjects);
 app.get('/project/owner/:owner', ProjectController.getProjectsByUser);
 app.get('/project/:id', ProjectController.getProjectByID);
+app.get('/project/github/repos', ProjectController.getGitHubRepos);
+app.post('/project/github/import', ProjectController.importProjectFromGitHub);
 
 app.get('/account', UserController.ensureAuthenticated, UserController.accountGet);
 app.put('/account', UserController.ensureAuthenticated, UserController.accountPut);
@@ -77,17 +100,15 @@ app.get('/logout', UserController.logout);
 app.get('/unlink/:provider', UserController.ensureAuthenticated, UserController.unlink);
 
 app.get('/auth/github', passport.authenticate('github'));
-// app.get('/auth/github/callback', passport.authenticate('github', { successRedirect: `https://localhost:8080?g_id=${req.user.attributes.github_username}`, failureRedirect: '/login' }));
 app.get('/auth/github/callback', passport.authenticate('github'), (req, res) => {
-    console.log(req.user.attributes.github_username);
-    res.redirect(`https://localhost:8080?g_id=${req.user.attributes.github_username}`);
+    res.redirect(`https://lvh.me:8080?uid=${req.user.attributes.id}&uname=${req.user.attributes.github_username}&s=${req.session.id}`);
 });
 
 app.get('/repo/status', RepoController.getStatus);
 app.get('/repo/commits', RepoController.getCommits);
 
-app.get('/github/repos', UserController.getGitHubRepos);
 
+/* ------ Launch Server ------ */
 
 (() => {
     const envStatus = app.get('env').charAt(0).toUpperCase() + app.get('env').slice(1);

@@ -4,6 +4,7 @@ import Landing from './views/Landing.vue';
 import Profile from './views/Profile.vue';
 import UserDashboard from './views/UserDashboard.vue';
 import ProjectDashboard from './views/ProjectDashboard.vue';
+import ProjectList from './views/ProjectList.vue';
 
 Vue.use(Router);
 
@@ -27,14 +28,11 @@ export default new Router({
             component: ProjectDashboard
         },
         {
-            path: '/dashboard/:username',
-            name: 'dashboard',
-            props: true,
-            component: UserDashboard
+            path: '/projects',
+            component: ProjectList
         },
         {
             path: '/dashboard',
-            name: 'dashboard2',
             component: UserDashboard
         }
     ]

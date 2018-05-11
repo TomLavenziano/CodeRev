@@ -2,8 +2,7 @@
   <div id="ProjectDashboard">
       <div class="commits-container">
           <div v-for="commit in commits" :key="commit.key" class="card-panel">
-              <span>{{  }}</span>
-              {{ commit.message }}
+              <span> {{ commit.message }} </span>
           </div>
       </div>
       <div class="review-container card-panel">
@@ -12,7 +11,7 @@
   </div>
 </template>
 <script>
-import vhttp from '../http-global';
+import api from '../http-global';
 export default {
     name: 'ProjectDashboard',
     data: () => ({
@@ -24,12 +23,12 @@ export default {
         console.log('Project dashboard');
         const id = this.id;
         console.log('ID:' + id);
-        vhttp.get(`project/${id}`).then(res => {
+        api.get(`project/${id}`).then(res => {
             console.log(res.data);
             this.project = res.data;
         });
 
-        vhttp.get('git/commits').then(res => {
+        api.get('git/commits').then(res => {
             this.commits = res.data.all;
         });
     }
