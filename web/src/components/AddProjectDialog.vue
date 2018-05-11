@@ -16,13 +16,7 @@ export default {
     name: 'AddProjectDialog',
     data: () => {
         return {
-            gitHubRepos: [],
-            postData: {
-                repo: {
-                    name: '',
-                    clone_url: ''
-                }
-            }
+            gitHubRepos: []
         };
     },
     created() {
