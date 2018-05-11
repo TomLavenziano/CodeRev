@@ -1,3 +1,6 @@
+<!--
+    View a specific review
+-->
 <template>
   <div id="Review">
 
@@ -7,7 +10,6 @@
 export default {
     name: 'Review',
     components: {
-        componentName
     },
     data() {
         return {
