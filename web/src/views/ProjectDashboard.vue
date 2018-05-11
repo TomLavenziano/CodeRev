@@ -11,20 +11,25 @@
               <span class="very-small-section"> {{ commits[0].hash }} </span>
           </div>
       </div>
+
       <div class="info-container">
           <div class="commits-container">
               <div v-for="commit in commits" :key="commit.key" class="card-panel commit-card">
                   <div class="commit-message"> {{ commit.message }} </div>
+                  <div class="commit-message thin"> {{ commit.hash }} </div>
                   <hr />
                   <div class="commit-author"> {{ commit.author_name }}
                       <span class="commit-time">committed {{ commit.time }}</span>
                   </div>
               </div>
           </div>
+
           <div class="review-container card-panel">
-              {{ project }}
+              <!-- {{ project }} -->
+              <ViewDiff :pid="id"></ViewDiff>
           </div>
       </div>
+
       <ViewDiff :pid="id"></ViewDiff>
   </div>
 </template>
@@ -37,7 +42,8 @@ export default {
     name: 'ProjectDashboard',
     data: () => ({
         project: {},
-        commits: {}
+        commits: {},
+        showDiff: {}
     }),
     components: {
         ViewDiff
@@ -57,6 +63,10 @@ export default {
                 return commit;
             });
             console.log(this.commits[0]);
+        });
+
+        api.get(`project/${this.id}/repo/files`).then(res => {
+            this.showDiff = res.data;
         });
     }
 };
@@ -105,7 +115,7 @@ export default {
         width: 100%;
         display: inline-flex;
         .commits-container {
-            width: 50%;
+            width: 40%;
             float: left;
 
             & .commit-card {
@@ -115,6 +125,12 @@ export default {
                     font-weight: 500;
                     font-size: 1.5em;
                     color: #222;
+
+                    &.thin {
+                        color: #333;
+                        font-weight: 400;
+                        font-size: 1.25em;
+                    }
                 }
 
                 & .commit-author {
@@ -131,7 +147,7 @@ export default {
         }
 
     .review-container {
-        width: 50%;
+        width: 60%;
         float: right;
     }
 }
