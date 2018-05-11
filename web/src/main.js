@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store/store';
 import VueSession from 'vue-session';
+import VueCookie from 'vue-cookie';
 import Vuetify from 'vuetify';
 import '../node_modules/vuetify/dist/vuetify.min.css';
 import './registerServiceWorker';
@@ -14,8 +15,10 @@ import ProjectPanel from './components/ProjectPanel.vue';
 import Notifications from './components/Notifications.vue';
 import ToDo from './components/ToDo.vue';
 
+Vue.use(VueCookie);
 Vue.use(VueSession, { persist: true });
 Vue.use(Vuetify);
+
 Vue.component('my-todo', ToDo);
 Vue.component('my-userdash', UserDashboard);
 Vue.component('my-navpanel', NavPanel);

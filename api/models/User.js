@@ -4,8 +4,8 @@ const bookshelf = require('../config/bookshelf');
 
 const User = bookshelf.Model.extend({
     tableName: 'users',
-    hasTimestamps: true
-
+    hasTimestamps: true,
+    hidden: ['password', 'passwordResetToken', 'passwordResetExpires']
 });
 
 module.exports = User;

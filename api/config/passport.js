@@ -39,10 +39,11 @@ passport.use(new GithubStrategy({
     callbackURL: '/auth/github/callback',
     passReqToCallback: true
 }, function(req, accessToken, refreshToken, profile, done) {
+    console.info('GitHub Profile:');
     console.log(profile);
     if (req.user) {
         console.log('NOTE: req.user exists');
-        new User({ github: profile.id })
+        new User({ id: profile.id })
             .fetch()
             .then(function(user) {
                 if (user) {

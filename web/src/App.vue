@@ -2,7 +2,7 @@
 <div id="app">
     <v-app light>
         <!-- Top Navigation -->
-        <v-toolbar class="white">
+        <v-toolbar class="white" app>
             <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-toolbar-title class="title-bar">CodeRev</v-toolbar-title>
             <div class="top-navigation">
@@ -14,50 +14,58 @@
         </v-toolbar>
 
         <!-- Side Navigation -->
-        <v-navigation-drawer
-         v-model="drawer"
-         :mini-variant="mini"
-         temporary
-         dark
-         absolute
-       >
-         <v-list class="pa-1">
-           <v-list-tile v-if="mini" @click.stop="mini = !mini">
-             <v-list-tile-action>
-               <v-icon>chevron_right</v-icon>
-             </v-list-tile-action>
-           </v-list-tile>
-           <v-list-tile avatar tag="div">
-             <v-list-tile-avatar>
-               <img src="https://randomuser.me/api/portraits/men/85.jpg" >
-             </v-list-tile-avatar>
-             <v-list-tile-content>
-               <v-list-tile-title>{{}}</v-list-tile-title>
-             </v-list-tile-content>
-             <v-list-tile-action>
-               <v-btn icon @click.stop="mini = !mini">
-                 <v-icon>chevron_left</v-icon>
-               </v-btn>
-             </v-list-tile-action>
-           </v-list-tile>
-         </v-list>
-         <v-list class="pt-0" dense>
-           <v-divider light></v-divider>
-           <v-list-tile v-for="item in items" :key="item.title" @click="">
-             <v-list-tile-action>
-               <v-icon>{{ item.icon }}</v-icon>
-             </v-list-tile-action>
-             <v-list-tile-content>
-               <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-             </v-list-tile-content>
-           </v-list-tile>
-         </v-list>
-       </v-navigation-drawer>
+        <v-navigation-drawer v-model="drawer" persistent app dark_>
+
+            <v-list class="pa-1">
+                <v-list-tile avatar tag="div">
+                    <v-list-tile-avatar>
+                        <img :src="currentUser.picture">
+                    </v-list-tile-avatar>
+
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{ currentUser.name }}</v-list-tile-title>
+                    </v-list-tile-content>
+
+                    <v-list-tile-action>
+                        <v-btn icon @click.stop="drawer = false">
+                            <v-icon>chevron_left</v-icon>
+                        </v-btn>
+                    </v-list-tile-action>
+
+                </v-list-tile>
+            </v-list>
+
+            <v-list class="pt-0" dense>
+                <v-divider></v-divider>
+                <v-list-tile v-for="route in routes" :key="route.title" :to="{path: route.path}">
+                        <v-list-tile-action>
+                            <v-icon>{{ route.icon }}</v-icon>
+                        </v-list-tile-action>
+
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{ route.title }}</v-list-tile-title>
+                        </v-list-tile-content>
+                </v-list-tile>
+                <v-divider></v-divider>
+                <v-list-tile @click="userLogout()">
+                        <v-list-tile-action>
+                            <v-icon>exit_to_app</v-icon>
+                        </v-list-tile-action>
+
+                        <v-list-tile-content>
+                            <v-list-tile-title>Logout</v-list-tile-title>
+                        </v-list-tile-content>
+                </v-list-tile>
+            </v-list>
+
+        </v-navigation-drawer>
 
         <!-- Main Content -->
         <div class="content-container">
             <transition name="fade">
-                <router-view></router-view>
+                <v-content>
+                    <router-view></router-view>
+                </v-content>
             </transition>
         </div>
 
@@ -83,8 +91,7 @@
 </style>
 
 <script>
-import axios from 'axios';
-import vhttp from './http-global';
+import api from './http-global';
 export default {
     name: 'App',
     components: {},
@@ -92,36 +99,54 @@ export default {
         return {
             title: 'CodeRev | Open Source Code Review',
             currentUser: {},
+
             drawer: null,
-            items: [
-                { title: 'Home', icon: 'dashboard' },
-                { title: 'About', icon: 'question_answer' }
-            ],
-            mini: false,
-            right: null
+            routes: [
+                {
+                    title: 'Home',
+                    icon: 'home',
+                    path: '/'
+                },
+                {
+                    title: 'Dashboard',
+                    icon: 'dashboard',
+                    path: '/dashboard'
+                },
+                {
+                    title: 'Projects',
+                    icon: 'work',
+                    path: '/projects'
+                },
+                {
+                    title: 'Profile',
+                    icon: 'person',
+                    path: '/profile'
+                }
+            ]
         };
     },
     created() {
         this.initUserSession();
     },
-    // TODO: Store the github query param from above in a vuex store so that
-    // it's available throughout the lifespan of the app. Consider running a post load
-    // script that checks if an ID has been returned and if it has then query github and
-    // store the entire user in vuex
     methods: {
         initUserSession() {
             this.$session.start();
-            // vhttp.get('account').then(res => {
-            //     console.log(res);
-            //     this.currentUser = res.data;
-            //     this.$session.set('current_user', res.data);
-            //     console.log(this.$session.set('current_user'));
-            // });
-            this.$session.set('coderev_uid', this.$route.query.uid);
+            if (this.$cookie.get('connect.sid')) {
+                api.get('account').then(res => {
+                    console.log(res.data);
+                    this.currentUser = res.data;
+                    this.$session.set('current_user', res.data);
+                });
+            }
+        },
+        userLogout() {
+            this.$session.destroy();
+            this.$cookie.delete('connect.sid');
+            this.drawer = false;
+            this.$router.push('/');
         },
         getAvatar() {
-            vhttp.get(`https://github.com/users/${this.$session.get('uid')}`)
-                .then(console.log);
+            api.get(this.currentUser.picture).then();
         }
     }
 };

@@ -11,9 +11,6 @@
 <script >
 export default {
     name: 'GitHubLogin',
-    props: {
-
-    },
     data: () => ({
 
     })
