@@ -1,3 +1,8 @@
+<!--
+    List projects from CodeRev and GitHub as cards and allow you
+    to import a GitHub Project into CodeRev
+-->
+
 <template>
   <div id="ProjectList">
           <div class="section-title">CodeRev Projects</div>

@@ -17,10 +17,11 @@
               {{ project }}
           </div>
       </div>
-
+      <ViewDiff :pid="id"></ViewDiff>
   </div>
 </template>
 <script>
+import ViewDiff from '@/components/ViewDiff.vue';
 import api from '../http-global';
 import ta from 'time-ago';
 
@@ -30,6 +31,9 @@ export default {
         project: {},
         commits: {}
     }),
+    components: {
+        ViewDiff
+    },
     props: ['id'],
     created() {
         console.log('Project dashboard');

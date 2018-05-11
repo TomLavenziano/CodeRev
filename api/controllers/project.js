@@ -73,14 +73,22 @@ exports.importProjectFromGitHub = (req, res) => {
     console.info('Project to be stored:');
     console.log(project);
 
-    new Project(project)
-        .save(null, { method: 'insert' })
+
+    new Project({ id: repo.id })
+        .upsert(project)
         .then(model => {
-            console.info('Model Retrieved: ' + !!model);
             console.info('CodeRev project succesfully created');
-            git(repoPath).clone(cloneUrl, () => {
-                console.info('GitHub repo successfully cloned');
-            });
+            git(repoPath)
+                .checkIsRepo((err, isRepo) => {
+                    if (!isRepo) {
+                        console.log('Cloning GitHub repo...');
+                        git(repoPath).clone(cloneUrl);
+                    } else {
+                        console.info('Pulling repo...');
+                        git(repoPath).pull((err, data) => console.log(data || err));
+                    }
+                });
+
             res.json({ id: model.id, repoPath: upstreamPath });
         });
 };
@@ -93,18 +101,23 @@ exports.getCommits = (req, res) => {
     });
 };
 
+// FIXME: Not returning diffs
 exports.getCurrentDiff = (req, res) => {
     console.log('Getting diff...');
     const pID = req.params.id;
     new Project({ id: pID })
         .fetch()
         .then(c => {
-            git(c.coderev_upstream).diff(diff => {
+            git(c.coderev_upstream).diff((err, diff) => {
+                console.info('Diff');
+                console.log(diff);
                 res.json({ diff: diff });
             });
         });
 };
 
+
+// TODO: GET/POST Reviews
 
 function getProjectRepoPath(projectID) {
     console.log('ID recieved: ' + projectID);
