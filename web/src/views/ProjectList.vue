@@ -6,9 +6,13 @@
 <template>
   <div id="ProjectList">
           <div class="section-title">CodeRev Projects</div>
-      <ListProjectCards></ListProjectCards>
+          <div class="project-scroller">
+              <ListProjectCards></ListProjectCards>
+          </div>
           <div class="section-title or">- Or Add a Project from GitHub -</div>
-      <AddProjectDialog></AddProjectDialog>
+          <div class="gh-shrink">
+              <AddProjectDialog></AddProjectDialog>
+          </div>
   </div>
 </template>
 <script>
@@ -32,6 +36,17 @@ export default {
     #ProjectList {
         width: 90%;
         margin: 0 auto;
+        // flex-grow: 2;
+
+        & .project-scroller {
+            overflow-x: auto;
+        }
+
+        & .gh-shrink {
+            width: 35%;
+            margin: 0 auto;
+            text-align: center;
+        }
 
         & .section-title {
             color: #333;

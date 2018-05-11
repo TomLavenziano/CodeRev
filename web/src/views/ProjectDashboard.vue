@@ -1,7 +1,8 @@
 <template>
   <div id="ProjectDashboard">
       <div class="project-name card-panel">
-          {{ project.name }}
+          <div> {{ project.name }} </div>
+          <div> {{ project. }} </div>
       </div>
       <div class="info-container">
           <div class="commits-container">
