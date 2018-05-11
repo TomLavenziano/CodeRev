@@ -1,8 +1,15 @@
 <template>
   <div id="ProjectDashboard">
-      <div class="project-name card-panel">
-          <div> {{ project.name }} </div>
-          <div> {{ project. }} </div>
+      <div class="project-info-card card-panel">
+          <div class="">
+              <span> {{ project.name }} </span>
+              <div class="small-section"> {{ project.github_fullname }} </div>
+          </div>
+          <hr />
+          <div class="">
+              <span class="small-section dim">Latest:</span>
+              <span class="very-small-section"> {{ commits[0].hash }} </span>
+          </div>
       </div>
       <div class="info-container">
           <div class="commits-container">
@@ -67,11 +74,31 @@ export default {
     #ProjectDashboard {
         display: inline-block;
     }
-    .project-name {
+    .project-info-card {
         width: 99%;
-        font-size: 3em;
+        font-size: 3.5em;
         font-weight: bold;
         padding-left: 10px;
+
+        & .small-section {
+            font-size: .7em;
+            color: #555;
+            font-weight: 300;
+            // line-height: .25em;
+
+            &.dim {
+                font-size: .6em;
+                font-weight: 400;
+                // line-height: .75em;
+            }
+        }
+
+        & .very-small-section {
+            font-size: .55em;
+            color: #555;
+            font-weight: 300;
+            // line-height: .5em;
+        }
     }
 
     .info-container {

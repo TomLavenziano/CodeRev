@@ -101,7 +101,6 @@ exports.getCommits = (req, res) => {
     });
 };
 
-// FIXME: Not returning diffs
 exports.getCurrentDiff = (req, res) => {
     console.log('Getting diff...');
     const pID = req.params.id;
@@ -116,6 +115,25 @@ exports.getCurrentDiff = (req, res) => {
         });
 };
 
+exports.getDiffByHash = (req, res) => {
+    const id = req.params.id;
+    const hash = req.params.hash;
+
+    getProjectRepoPath(id).then(path => {
+        // git(path).diff()
+    });
+};
+
+exports.getHeadCommitFiles = (req, res) => {
+    const id = req.params.id;
+    const hash = req.params.hash;
+
+    getProjectRepoPath(id).then(path => {
+        git(path).show((err, data) => {
+            res.json(data);
+        });
+    });
+};
 
 // TODO: GET/POST Reviews
 

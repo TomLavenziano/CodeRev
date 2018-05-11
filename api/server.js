@@ -80,6 +80,7 @@ app.get('/project/:id', ProjectController.getProjectByID);
 
 app.get('/project/repo/diff/:id', ProjectController.getCurrentDiff);
 app.get('/project/repo/commits/:id', ProjectController.getCommits);
+app.get('/project/:id/repo/files', ProjectController.getHeadCommitFiles);
 
 app.get('/project/github/repos', ProjectController.getGitHubRepos);
 app.post('/project/github/import', ProjectController.importProjectFromGitHub);

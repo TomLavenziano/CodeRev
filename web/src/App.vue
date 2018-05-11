@@ -142,8 +142,10 @@ export default {
         userLogout() {
             this.$session.destroy();
             this.$cookie.delete('connect.sid');
-            this.drawer = false;
-            this.$router.push('/');
+            api.get('logout').then(() => {
+                this.drawer = false;
+                this.$router.push('/');
+            });
         },
         getAvatar() {
             api.get(this.currentUser.picture).then();
