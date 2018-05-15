@@ -9,24 +9,24 @@ import VueHighlightJS from 'vue-highlightjs';
 import '../node_modules/vuetify/dist/vuetify.min.css';
 import './registerServiceWorker';
 
-import UserDashboard from './views/UserDashboard.vue';
-import NavPanel from './components/NavigationPanel.vue';
-import ProjectList from './components/ProjectList.vue';
-import ProjectPanel from './components/ProjectPanel.vue';
-import Notifications from './components/Notifications.vue';
-import ToDo from './components/ToDo.vue';
+// import UserDashboard from './views/UserDashboard.vue';
+// import NavPanel from './components/NavigationPanel.vue';
+// import ProjectList from './components/ProjectList.vue';
+// import ProjectPanel from './components/ProjectPanel.vue';
+// import Notifications from './components/Notifications.vue';
+// import ToDo from './components/ToDo.vue';
 
 Vue.use(VueCookie);
 Vue.use(VueSession, { persist: true });
 Vue.use(Vuetify);
 Vue.use(VueHighlightJS);
 
-Vue.component('my-todo', ToDo);
-Vue.component('my-userdash', UserDashboard);
-Vue.component('my-navpanel', NavPanel);
-Vue.component('my-projects', ProjectList);
-Vue.component('proj-panel', ProjectPanel);
-Vue.component('notif-card', Notifications);
+// Vue.component('my-todo', ToDo);
+// Vue.component('my-userdash', UserDashboard);
+// Vue.component('my-navpanel', NavPanel);
+// Vue.component('my-projects', ProjectList);
+// Vue.component('proj-panel', ProjectPanel);
+// Vue.component('notif-card', Notifications);
 
 Vue.config.productionTip = false;
 

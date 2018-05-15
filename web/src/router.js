@@ -43,10 +43,10 @@ export default new Router({
             path: '/reviewcommit',
             component: AddCommitReview
         },
-        {
-            path: '/dashboard',
-            component: UserDashboard
-        },
+        // {
+        //     path: '/dashboard',
+        //     component: UserDashboard
+        // },
         {
             path: '/profile',
             name: 'profile',
