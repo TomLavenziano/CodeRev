@@ -1,12 +1,24 @@
 <template>
   <div id="ViewDiff">
       {{pid}}
+    <div id="app">
+        <brace
+          :fontsize="'22px'"
+          :theme="'monokai'"
+          :mode="'javascript'"
+          :codefolding="'markbegin'"
+          :softwrap="'free'"
+          :selectionstyle="'text'"
+          :highlightline="true">
+        </brace>
+      </div>
       <div class="diff-holder" v-html="diffHtml"></div>
   </div>
 </template>
 <script>
 import api from '../http-global';
 import { Diff2Html } from 'diff2html';
+import Brace from 'vue-bulma-brace';
 
 export default {
     name: 'ViewDiff',

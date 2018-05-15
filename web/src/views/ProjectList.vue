@@ -5,14 +5,14 @@
 
 <template>
   <div id="ProjectList">
-          <div class="section-title">CodeRev Projects</div>
-          <div class="project-scroller">
-              <ListProjectCards></ListProjectCards>
-          </div>
-          <div class="section-title or">- Or Add a Project from GitHub -</div>
-          <div class="gh-shrink">
-              <AddProjectDialog></AddProjectDialog>
-          </div>
+    <div class="section-title">CodeRev Projects</div>
+    <div class="project-scroller">
+      <ListProjectCards></ListProjectCards>
+    </div>
+    <div class="section-title or">- Or Add a Project from GitHub -</div>
+    <div class="gh-shrink">
+      <AddProjectDialog></AddProjectDialog>
+    </div>
   </div>
 </template>
 <script>
