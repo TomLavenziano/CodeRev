@@ -1,4 +1,4 @@
-// const fs = require('fs-extra');
+const fs = require('fs-extra');
 const path = require('path');
 const http = require('request-promise-native');
 const git = require('simple-git');
@@ -33,6 +33,9 @@ exports.getProjectByID = (req, res) => {
 };
 
 exports.getCodeRevProjects = (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ status: 401, message: 'User not authenticated' });
+    }
     console.log(`Getting Project for user ${req.user.attributes.username}...`);
     new Project()
         .where('github_owner_id', req.user.attributes.id)
@@ -41,6 +44,9 @@ exports.getCodeRevProjects = (req, res) => {
 };
 
 exports.getGitHubRepos = (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ status: 401, message: 'User not authenticated' });
+    }
     console.log('Getting repos...');
     const repoUrl = req.user.attributes.repos_url;
     const options = {
@@ -54,11 +60,11 @@ exports.getGitHubRepos = (req, res) => {
 };
 
 exports.importProjectFromGitHub = (req, res) => {
-    console.info('Importing from GitHub...');
+    console.info('Importing project from GitHub...');
     const repo = req.body;
     const cloneUrl = repo.clone_url;
     const upstreamPath = path.join(process.env.REPOS_PATH, repo.owner.login, repo.name);
-    const repoPath = path.join(process.env.REPOS_PATH, repo.owner.login);
+    const userPath = path.join(process.env.REPOS_PATH, repo.owner.login);
     const project = {
         id: repo.id,
         name: repo.name,
@@ -70,26 +76,20 @@ exports.importProjectFromGitHub = (req, res) => {
         github_json: JSON.stringify(repo),
         coderev_upstream: upstreamPath
     };
-    console.info('Project to be stored:');
-    console.log(project);
+    // console.info('Project to be stored:');
+    // console.log(project);
 
 
     new Project({ id: repo.id })
         .upsert(project)
         .then(model => {
-            console.info('CodeRev project succesfully created');
-            git(repoPath)
-                .checkIsRepo((err, isRepo) => {
-                    if (!isRepo) {
-                        console.log('Cloning GitHub repo...');
-                        git(repoPath).clone(cloneUrl);
-                    } else {
-                        console.info('Pulling repo...');
-                        git(repoPath).pull((err, data) => console.log(data || err));
-                    }
-                });
-
-            res.json({ id: model.id, repoPath: upstreamPath });
+            console.info(`Project ${repo.name} added to the database successfully`);
+            initGitRepo(userPath, upstreamPath, cloneUrl)
+                .then(status => {
+                    console.log(status);
+                    res.json({ id: model.id, upstreamPath, status });
+                })
+                .catch(console.error);
         });
 };
 
@@ -138,6 +138,7 @@ exports.getHeadCommitFiles = (req, res) => {
             // 'HEAD^',
             'HEAD'
         ], (err, data) => {
+            console.info('Data returned');
             console.info(data);
             res.json(data);
         });
@@ -152,6 +153,32 @@ function getProjectRepoPath(projectID) {
         new Project({ id: projectID })
             .fetch()
             .then(c => resolve(c.attributes.coderev_upstream))
+            .catch(reject);
+    });
+}
+
+const isGitRepo = repo => fs.pathExists(path.join(repo, '.git'));
+
+function initGitRepo(userPath, repoPath, cloneUrl) {
+    return new Promise((resolve, reject) => {
+        fs.ensureDir(userPath)
+            .then(() => {
+                console.info(`User directory ${userPath} created `);
+                isGitRepo(repoPath)
+                    .then(isRepo => {
+                        if (isRepo) {
+                            console.info('Pulling from upstream repo...');
+                            git(repoPath).pull((err, data) => {
+                                console.log(data || err);
+                                resolve({ status: 'pulled', data });
+                            });
+                        } else {
+                            console.log('Cloning GitHub repo...');
+                            git(userPath).clone(cloneUrl);
+                            resolve({ status: 'cloned', data: { cloneUrl }});
+                        }
+                    });
+            })
             .catch(reject);
     });
 }
