@@ -4,17 +4,23 @@
           <div class="">
               <span> {{ project.name }} </span>
               <div class="small-section"> {{ project.github_fullname }} ({{ project.id }})</div>
+              <div class="">
+                  <span class="small-section dim">Latest:</span>
+                  <span class="very-small-section" v-if="commits"> {{ commits[0].hash }} </span>
+              </div>
           </div>
           <hr />
-          <div class="">
-              <span class="small-section dim">Latest:</span>
-              <span class="very-small-section"> {{ commits[0].hash }} </span>
+          <div class="clone-url-container">
+              <span class="small-section dim">Clone:</span>
+              <span class="very-small-section">
+                  <input type="text" name="clone-url" :value="'git clone ' + project.coderev_upstream" class="clone-url-input"  @focus="$event.target.select()" :style="{width : project.coderev_upstream.length + 10 + 'rem'}">
+               </span>
           </div>
       </div>
 
       <div class="info-container">
           <div class="commits-container">
-              <div v-for="commit in commits" :key="commit.key" class="card-panel commit-card">
+              <div v-for="commit in commits" :key="commit.key" v-if="commits" class="card-panel commit-card">
                   <div class="commit-message"> {{ commit.message }} </div>
                   <div class="commit-message thin"> {{ commit.hash }} </div>
                   <hr />
@@ -51,13 +57,15 @@ export default {
     },
     props: ['id'],
     created() {
-        console.log('Project dashboard');
-        console.log('ID:' + this.id);
+        console.log(`Project Dashboard | Project: ${this.id}`);
+
+        // Get Project by ID
         api.get(`project/${this.id}`).then(res => {
             console.log(res.data);
             this.project = res.data;
         });
 
+        // Get the Project's commits
         api.get(`project/repo/commits/${this.id}`).then(res => {
             this.commits = res.data.all.map(commit => {
                 commit.time = ta.ago(commit.date);
@@ -66,26 +74,24 @@ export default {
             console.log(this.commits[0]);
         });
 
+        // Get the files from the Project's last commit
         api.get(`project/${this.id}/repo/files`).then(res => {
             console.info(this.showDiff);
             this.showDiff = res.data;
         });
+    },
+    methods: {
+
     }
 };
 </script>
 <style lang="less" scoped>
-    .card-panel {
-      padding: 0.5%;
-      margin: 10px;
-      border-radius: 5px;
-      background-color: #FFF;
-      transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    }
+    @import '../assets/styles/imports.less';
 
     #ProjectDashboard {
         display: inline-block;
     }
+
     .project-info-card {
         width: 99%;
         font-size: 3.5em;
@@ -111,6 +117,17 @@ export default {
             font-weight: 300;
             // line-height: .5em;
         }
+
+        & .clone-url-container {
+            & input.clone-url-input {
+                margin-left: .5em;
+                border: 2px solid #777;
+                padding: 5px;
+                border-radius: 7px;
+            }
+
+        }
+
     }
 
     .info-container {

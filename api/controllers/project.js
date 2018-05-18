@@ -147,6 +147,20 @@ exports.getHeadCommitFiles = (req, res) => {
 
 // TODO: GET/POST Reviews
 
+exports.getCommitReviews = (req, res) => {
+
+};
+
+exports.addCommitReview = (req, res) => {
+
+};
+
+
+exports.saveDiffToHead = (req, res) => {
+
+};
+
+
 function getProjectRepoPath(projectID) {
     console.log('ID recieved: ' + projectID);
     return new Promise((resolve, reject) => {
@@ -168,13 +182,17 @@ function initGitRepo(userPath, repoPath, cloneUrl) {
                     .then(isRepo => {
                         if (isRepo) {
                             console.info('Pulling from upstream repo...');
-                            git(repoPath).pull((err, data) => {
-                                console.log(data || err);
-                                resolve({ status: 'pulled', data });
-                            });
+                            git(repoPath)
+                                .addConfig('receive.denyCurrentBranch', 'updateInstead')
+                                .pull((err, data) => {
+                                    console.log(data || err);
+                                    resolve({ status: 'pulled', data });
+                                });
                         } else {
                             console.log('Cloning GitHub repo...');
-                            git(userPath).clone(cloneUrl);
+                            git(userPath)
+                                .addConfig('receive.denyCurrentBranch', 'updateInstead')
+                                .clone(cloneUrl);
                             resolve({ status: 'cloned', data: { cloneUrl }});
                         }
                     });

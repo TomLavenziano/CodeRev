@@ -4,7 +4,7 @@
         <!-- Top Navigation -->
         <v-toolbar class="blue darken-2" app>
             <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-            <v-toolbar-title class="title-bar">CodeRev</v-toolbar-title>
+            <v-toolbar-title :to="{path: '/'}" class="title-bar">CodeRev</v-toolbar-title>
             <div class="top-navigation">
                 <!-- <router-link to="/">Home</router-link> -->
                 <!-- <router-link to="/dashboard">Dashboard</router-link> -->
