@@ -4,7 +4,7 @@
             <v-layout row wrap>
                 <v-flex xs24 sm12>
                     <v-card>
-                        <v-card-media v-bind:src="require('@/assets/user-profile-bg.jpg')" height="200px">
+                        <v-card-media v-bind:src="require('@/assets/img/user-profile-bg.jpg')" height="200px">
                         </v-card-media>
                         <v-card-title primary-title>
                             <div>
@@ -100,21 +100,17 @@
 </div>
 </template>
 <script>
-import UserProfile from '@/components/UserProfile.vue';
 import axios from 'axios';
 
 export default {
     name: 'profile',
-    components: {
-        UserProfile
-    },
     data() {
         return {
             user: {},
             projects: {},
-            CoderevLink:{},
-            CharityLink:{},
-            RecipeLink:{}
+            CoderevLink: {},
+            CharityLink: {},
+            RecipeLink: {}
 
         };
     },
@@ -167,7 +163,6 @@ export default {
         this.getCharityLink();
         this.getCoderevLink();
         this.getRecipeLink();
-
     }
-}
+};
 </script>

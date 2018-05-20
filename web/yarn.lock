@@ -1450,12 +1450,6 @@ brace-expansion@^1.0.0, brace-expansion@^1.1.7:
     balanced-match "^1.0.0"
     concat-map "0.0.1"
 
-brace@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/brace/-/brace-0.10.0.tgz#edef4eb9b0928ba1ee5f717ffc157749a6dd5d76"
-  dependencies:
-    w3c-blob "0.0.1"
-
 braces@^1.8.2:
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/braces/-/braces-1.8.5.tgz#ba77962e12dff969d6b76711e914b737857bf6a7"
@@ -2330,19 +2324,6 @@ dashdash@^1.12.0:
 data-uri-to-buffer@1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-1.2.0.tgz#77163ea9c20d8641b4707e8f18abdf9a78f34835"
-
-datatables.net-dt@^1.10.16:
-  version "1.10.16"
-  resolved "https://registry.yarnpkg.com/datatables.net-dt/-/datatables.net-dt-1.10.16.tgz#6758a308fb9e5f9629fb6541cc301e48ec9ec555"
-  dependencies:
-    datatables.net "1.10.16"
-    jquery ">=1.7"
-
-datatables.net@1.10.16, datatables.net@^1.10.16:
-  version "1.10.16"
-  resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-1.10.16.tgz#4b052d1082824261b68eed9d22741b711d3d2469"
-  dependencies:
-    jquery ">=1.7"
 
 date-now@^0.1.4:
   version "0.1.4"
@@ -4704,10 +4685,6 @@ joi@^12.0.0:
     hoek "4.x.x"
     isemail "3.x.x"
     topo "2.x.x"
-
-jquery@>=1.7, jquery@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
 js-base64@^2.1.9:
   version "2.4.3"
@@ -8098,12 +8075,6 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-vue-bulma-brace@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/vue-bulma-brace/-/vue-bulma-brace-0.1.0.tgz#c56483b93dc2545eee041ec0c5940af49e718c5f"
-  dependencies:
-    brace "^0.10.0"
-
 vue-cookie@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/vue-cookie/-/vue-cookie-1.1.4.tgz#b8b46d112bda9f93a2f47017c2ed5282d2064fda"
@@ -8211,10 +8182,6 @@ vuetify@^1.0.17:
 vuex@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.0.1.tgz#e761352ebe0af537d4bb755a9b9dc4be3df7efd2"
-
-w3c-blob@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/w3c-blob/-/w3c-blob-0.0.1.tgz#b0cd352a1a50f515563420ffd5861f950f1d85b8"
 
 w3c-hr-time@^1.0.1:
   version "1.0.1"
