@@ -4,29 +4,53 @@
 
 ## About
 
-CodeRev is an online platform that allows the contributors of open source software to add code review to their development pipeline.
+CodeRev is an online platform that allows the contributors of open source software to add code review to their development pipeline
 
 ## Getting Started
+    
+### 1. Make sure you have [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed, [nvm](https://github.com/creationix/nvm) is the recommended installation method
 
-1. Make sure you have [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
-2. Install your dependencies
+#### _Note: This project has only been tested on Linux and MacOS_
 
-    ```
-    cd path/to/coderev; npm install
-    ```
+### 2. Build each application
+   CodeRev is made up of two main services, each running as a separate application
 
-3. Launch the app
+```bash
+cd path/to/CodeRev/api; npm install
+cd path/to/CodeRev/web; npm install
+```
 
-    ```
-    npm start
-    ```
+### 3. Launch the app
 
-4. Navigate to 'http://localhost:3030' in a browser
+   In order to launch CodeRev you must have both the API and the web service running simultaneously.
+   The easiest way to do this is by opening each folder in a separate terminal
+
+Terminal 1 - API
+    
+```bash
+cd path/to/CodeRev/api; npm start
+```
+   
+Terminal 2 - Web
+    
+```bash
+cd path/to/CodeRev/web; npm run serve
+```
+
+### 4. Accept the security warnings
+   The app uses self signed certificates at the moment
+   
+   Accept the warnings at `https:lvh.me:4430` and `https:lvh.me:8080`
+    
+### 5. Navigate to `https://lvh.me:8080` in a browser
 
 
 ## Testing
 
-Simply run `npm test` and all your tests in the `test/` directory will be run.
+The API can be accessed at `https:lvh.me:4430`
+
+Example: `https:lvh.me:4430/project/owner/10148379`
+
 
 ## License
 
